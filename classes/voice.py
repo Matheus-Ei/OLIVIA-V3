@@ -21,7 +21,7 @@ def speak(data):
     pygame.mixer.music.load("sounds/voice/data.mp3") # Loads the sound to pygame
     try:
         pygame.mixer.music.play() # Speack the text in the sound with pygame
-        print(data)
+        print("-> "+data+" <-")
         while pygame.mixer.music.get_busy():
             pygame.time.Clock().tick(10)
 

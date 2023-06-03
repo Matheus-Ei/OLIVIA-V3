@@ -3,25 +3,44 @@ import speech_recognition as sr
 import threading
 import pyodbc
 import random
-import datetime
+from datetime import datetime
+import openai
 
 
 # Libraris
 import classes.appManagement as app
 import classes.voice as voice
+import classes.other as other
 
 
+# Pre-definitions
+def time():
+    global hour, minutes, seconds, day, week, mounth, year
+    time=datetime.now() 
+    hour = int(time.strftime("%H"))
+    minutes = int(time.strftime("%M"))
+    seconds = time.strftime("%S")
+    day = time.strftime("%d")
+    week = time.strftime("%A")
+    mounth = time.strftime("%B")
+    year = time.strftime("%Y")
+
+# Var pre-definitions
+context = ""
 
 
 
 # Main funcion to back-end
 def code():
+    # Var pre-definitions
+    context = ""
+
     # Creating the connection with the database
     conn_str = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=database\mainDb.accdb;'
     conn = pyodbc.connect(conn_str)
     cursor = conn.cursor()
 
-    # Creating the Speach Recognition
+    # Creating the Speach Recognition and defines the openai key
     r = sr.Recognizer()
 
     # Funcion to consult the questions to PROMETEU and check if they are in database
@@ -67,11 +86,18 @@ def code():
         seconds = time.strftime("%S")
         day = time.strftime("%d")
         week = time.strftime("%A")
-        mount = time.strftime("%B")
+        mounth = time.strftime("%B")
         year = time.strftime("%Y")
         try:
+            year = str(year)
+            mounth = str(mounth)
+            week = str(week)
+            day = str(day)
+            hour = str(hour)
+            minutes = str(minutes)
+            seconds = str(seconds)
             # Defines the date
-            date = str(year+"/"+mount+"/"+day+":"+week+"/"+hour+":"+minutes+":"+seconds)
+            date = str(year+"/"+mounth+"/"+day+":"+week+"/"+hour+":"+minutes+":"+seconds)
             cursor.execute("INSERT INTO logs(usuario, jarvis, data) VALUES ('"+textAudio+"','"+response+"','"+date+"');")
             # Save the alterations in the logs tabble
             conn.commit()
@@ -103,10 +129,44 @@ def code():
                     try:
                         basicAudio = r.listen(source)
                         textAudio=(r.recognize_google(basicAudio, language='pt-br'))
-                        print(textAudio)
                         app.open(textAudio) # Opening the app
                     except:
                         print("#####@ ERROR @#####")
+
+                
+                # Speak the time
+                elif question('horas', textAudio):
+                    global hour, minutes, seconds, day, week, mounth, year
+                    time()
+                    response=("São %d e %d minutos" %(hour ,minutes))
+                    voice.speak(response)
+
+
+                # Sends all the "elses" to chat-gpt
+                else:
+                    try:
+                        openai.api_key = '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'
+                        enter = context + "\n" + textAudio + "\n"
+                        response = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo",
+                            messages=[
+                                {"role": "system", "content":enter}
+                            ],
+                            max_tokens=200
+                        )
+                        response = response['choices'][0]['message']['content']
+                        context += textAudio + "\n" + response + "\n"
+                        print("---------")
+                        print(context)
+                        print("---------")
+                        voice.speak(response)
+                    except openai.APIError as e:
+                        response = "Erro... Openai não respondendo..."
+                        print(e)
+                        voice.speak(response)
+                        
+
+                logs(textAudio, response)
 
 
 

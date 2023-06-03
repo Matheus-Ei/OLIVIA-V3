@@ -6,6 +6,9 @@ import random
 from datetime import datetime
 import openai
 import sys
+import os
+import time
+import pyautogui
 
 
 # Libraris
@@ -15,7 +18,7 @@ import classes.other as other
 
 
 # Pre-definitions
-def time():
+def timeGet():
     global hour, minutes, seconds, day, week, mounth, year
     time=datetime.now() 
     hour = int(time.strftime("%H"))
@@ -27,17 +30,17 @@ def time():
     year = time.strftime("%Y")
 
 # Var pre-definitions
-context = ""
+context = " "
 
 
 
 # Main funcion to back-end
 def code():
     # Globals
-    global textAudio
+    global textAudio, response, context
 
     # Var pre-definitions
-    context = ""
+    context = " "
 
     # Creating the connection with the database
     conn_str = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=database\mainDb.accdb;'
@@ -142,7 +145,7 @@ def code():
                 # Speak the time
                 elif question('horas'):
                     global hour, minutes, seconds, day, week, mounth, year
-                    time()
+                    timeGet()
                     response=("São %d e %d minutos" %(hour ,minutes))
                     voice.speak(response)
 
@@ -151,6 +154,55 @@ def code():
                 elif question('desligamento'):
                     voice.speak(answer("desligamento")) 
                     sys.exit()
+
+
+                # Code to execute comands in windows, like turn of or loggof
+                elif question("desligar sistema"):
+                    voice.speak(answer("desligar sistema"))
+                    time.sleep(5)
+                    os.system("shutdown /s /t 1")
+
+                elif question("sair sistema"):
+                    voice.speak(answer("sair sistema"))
+                    time.sleep(5)
+                    os.system("shutdown -l")
+
+                elif question("reiniciar sistema"):
+                    voice.speak(answer("reiniciar sistema"))
+                    time.sleep(5)
+                    os.system("shutdown /r /t 1")
+
+
+                # Reseta a variavel contexto do chat-gpt
+                elif question('mudar de assunto'):
+                    context = "-"
+                    voice.speak(answer("mudar de assunto")) 
+
+
+                # PyAutoGUI freatures
+                elif question("abrir gerenciador de tarefas"):
+                    voice.speak(answer("abrir gerenciador de tarefas"))
+                    pyautogui.hotkey("ctrl", "shift", "esc")
+
+                elif question("visao geral das tarefas"):
+                    voice.speak(answer("visao geral das tarefas"))
+                    pyautogui.hotkey("winleft", "tab")
+
+                elif question("nova area de trabalho"):
+                    voice.speak(answer("nova area de trabalho"))
+                    pyautogui.hotkey("ctrl", "winleft", "d")
+
+                elif question("deletar area de trabalho"):
+                    voice.speak(answer("deletar area de trabalho"))
+                    pyautogui.hotkey("ctrl", "winleft", "f4")
+
+                elif question("mover para a are de trabalho a esquerda"):
+                    voice.speak(answer("mover para a are de trabalho a esquerda"))
+                    pyautogui.hotkey("ctrl", "winleft", "left")
+
+                elif question("mover para a are de trabalho a direita"):
+                    voice.speak(answer("mover para a are de trabalho a direita"))
+                    pyautogui.hotkey("ctrl", "winleft", "right")
                 
 
                 # Sends all the "elses" to chat-gpt
@@ -165,12 +217,12 @@ def code():
                             ],
                             max_tokens=200
                         )
-                        response = response['choices'][0]['message']['content']
-                        context += textAudio + "\n" + response + "\n"
+                        chat = response['choices'][0]['message']['content']
+                        context += textAudio + "\n" + chat + "\n"
                         print("---------")
                         print(context)
                         print("---------")
-                        voice.speak(response)
+                        voice.speak(chat)
                     except openai.APIError as e:
                         response = "Erro... Openai não respondendo..."
                         print(e)

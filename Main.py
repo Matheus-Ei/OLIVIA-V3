@@ -5,6 +5,7 @@ import pyodbc
 import random
 from datetime import datetime
 import openai
+import sys
 
 
 # Libraris
@@ -32,6 +33,9 @@ context = ""
 
 # Main funcion to back-end
 def code():
+    # Globals
+    global textAudio
+
     # Var pre-definitions
     context = ""
 
@@ -44,7 +48,8 @@ def code():
     r = sr.Recognizer()
 
     # Funcion to consult the questions to PROMETEU and check if they are in database
-    def question(question, textAudio):
+    def question(question):
+        global textAudio
         try:
             # Execute a consult
             cursor.execute('SELECT perg FROM question WHERE func = '+"'"+question+"';")
@@ -123,7 +128,7 @@ def code():
 
 
                 # Open a app
-                if  question('abrir aplicativo', textAudio):
+                if  question('abrir aplicativo'):
                     # Ask what app the user wants open
                     voice.speak("Qual aplicativo voce deseja abrir?")
                     try:
@@ -135,12 +140,18 @@ def code():
 
                 
                 # Speak the time
-                elif question('horas', textAudio):
+                elif question('horas'):
                     global hour, minutes, seconds, day, week, mounth, year
                     time()
                     response=("São %d e %d minutos" %(hour ,minutes))
                     voice.speak(response)
 
+
+                # Ends the code
+                elif question('desligamento'):
+                    voice.speak(answer("desligamento")) 
+                    sys.exit()
+                
 
                 # Sends all the "elses" to chat-gpt
                 else:

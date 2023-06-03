@@ -2,32 +2,24 @@ import win32gui
 import win32con
 import subprocess
 
-def app_na_frente(app_title):
-    # Encontre o identificador da janela do aplicativo pelo título
+def inFrontOff(app_title):
+    # Find the called app
     app_window = win32gui.FindWindow(None, app_title)
     print(app_window)
-
     if app_window:
         try:
-            # Defina o aplicativo como a janela ativa
             win32gui.SetForegroundWindow(app_window)
-
-            # Defina a janela do aplicativo como "topmost" (acima das outras janelas)
             win32gui.SetWindowPos(app_window, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
-
-            # Opcionalmente, restaure a janela (caso esteja minimizada)
-            win32gui.ShowWindow(app_window, win32con.SW_RESTORE)
         except TypeError:
-            print("#####@Erro de Tipo@#####")
-        #except win32gui.SetForegroundWindow:
-            #print('#####@Erro da SetForegroundWindow@#####')
-
+            print("#####@ TypeError @#####")
+        except win32gui.SetForegroundWindow:
+            print('#####@ SetForegroundWindow ERROR @#####')
     else:
-        print("Aplicativo não encontrado")
+        print("-> app not found <-")
 
 
-def abrir_app(atalho):
-    # Dicionário com os atalhos e caminhos dos aplicativos
+def open(atalho):
+    # Dicionary with the apps
     aplicativos = {
         'calculadora': 'C:\\Windows\\System32\\calc.exe',
         'bloco de notas': 'C:\\Windows\\System32\\notepad.exe',
@@ -36,13 +28,13 @@ def abrir_app(atalho):
         'navegador': 'C:\\Users\\t4iga\\AppData\\Local\\Programs\\Opera\\launcher.exe',
         'canva': 'C:\\Users\\t4iga\\AppData\\Local\\Programs\\Canva\\Canva.exe',
     }
-    # Função para abrir um aplicativo a partir de um atalho
+    # Funcion to open the app
     def abrir_aplicativo(atalho):
         if atalho in aplicativos:
             caminho = aplicativos[atalho]
             subprocess.Popen(caminho)
-            print(f"Aplicativo '{atalho}' aberto.")
+            print(f"App '{atalho}' has been opened")
         else:
-            print(f"Atalho '{atalho}' não encontrado.")
+            print(f"The app '{atalho}' not found")
 
     abrir_aplicativo(atalho)

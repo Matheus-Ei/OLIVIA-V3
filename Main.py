@@ -1,10 +1,14 @@
 # Imports
-import speech_recognition
-import pyttsx3
+import speech_recognition as sr
 import threading
 import pyodbc
 import random
 import datetime
+
+
+# Libraris
+import classes.appManagement as app
+import classes.voice as voice
 
 
 
@@ -12,18 +16,19 @@ import datetime
 
 # Main funcion to back-end
 def code():
-
     # Creating the connection with the database
     conn_str = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=database\mainDb.accdb;'
     conn = pyodbc.connect(conn_str)
     cursor = conn.cursor()
 
+    # Creating the Speach Recognition
+    r = sr.Recognizer()
 
     # Funcion to consult the questions to PROMETEU and check if they are in database
     def question(question, textAudio):
         try:
             # Execute a consult
-            cursor.execute('SELECT perg FROM perguntas WHERE func = '+"'"+question+"';")
+            cursor.execute('SELECT perg FROM question WHERE func = '+"'"+question+"';")
             # Recover the consult data
             rows = cursor.fetchall()
             for row in rows:
@@ -37,7 +42,7 @@ def code():
     def answer(answer):
         try:
             # Execute a consult
-            cursor.execute('SELECT resp FROM respostas WHERE func = '+"'"+answer+"';")
+            cursor.execute('SELECT resp FROM answer WHERE func = '+"'"+answer+"';")
             # Recover the consult data
             rows = cursor.fetchall()
             preResponse = []
@@ -54,7 +59,7 @@ def code():
         except pyodbc.Error as e:
             print(e)
 
-    # Função para logs na tabela logs no banco de dados
+    # Funcion to logs with database
     def logs(textAudio, response):
         time=datetime.now() 
         hour = int(time.strftime("%H"))
@@ -75,6 +80,42 @@ def code():
             print(e)
 
 
+    # Loop to capture and recognize the sound of the microfone
+    with sr.Microphone() as source:
+        print("->starting audio adjustment<-")
+        r.adjust_for_ambient_noise(source, duration=2) # Time to ajust the microfone recognition with the sound of the ambient
+        print("->given fit<-")
+        print("initialization...\n")
+        while True:
+            print("listening...\n")
+            try:
+                basicAudio = r.listen(source)
+                textAudio=(r.recognize_google(basicAudio, language="pt-br"))
+                textAudio = textAudio.lower() 
+                print("recognizing...\n")
+                print(textAudio + "\n")
+
+
+                # Open a app
+                if  question('abrir aplicativo', textAudio):
+                    # Ask what app the user wants open
+                    voice.speak("Qual aplicativo voce deseja abrir?")
+                    try:
+                        basicAudio = r.listen(source)
+                        textAudio=(r.recognize_google(basicAudio, language='pt-br'))
+                        print(textAudio)
+                        app.open(textAudio) # Opening the app
+                    except:
+                        print("#####@ ERROR @#####")
+
+
+
+
+
+
+            # Para valores não identificados
+            except sr.UnknownValueError:
+                print("...")
 
 
 

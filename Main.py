@@ -136,6 +136,51 @@ def code():
                 elif db.question("mover para a are de trabalho a direita", textAudio):
                     voice.speak(db.answer("mover para a are de trabalho a direita"))
                     pyautogui.hotkey("ctrl", "winleft", "right")
+
+
+                # Next song in spotify
+                elif db.question('pular musica', textAudio):
+                    db.answer("pular musica")
+                    voice.speak(retorno)
+                    spotify.next()
+
+                # Play in music
+                elif db.question('play musica'), textAudio:
+                    db.answer("play musica")
+                    voice.speak(retorno)
+                    spotify.play()
+
+                # Pause in music
+                elif db.question('pausar musica', textAudio):
+                    db.answer("pausar musica")
+                    voice.speak(retorno)
+                    spotify.pause()
+                                    
+                # Select a music
+                elif db.question('selecionar musica', textAudio):
+                    voice.speak("Diga o nome da musica que você quer que eu toque")
+                    retorno = "Diga o nome da musica que você quer que eu toque"
+                    try:
+                        Music = r.listen(source)
+                        textAudio=(r.recognize_google(Music, language='pt-br'))
+                    except:
+                        print("Deu um Erro!!")
+                    retorno = "Reproduzindo a música que você pediu!"
+                    voice.speak(retorno)
+                    spotify.selectSong(textAudio)
+
+                # Selects a playlist
+                elif db.question('tocar playlist', textAudio):
+                    voice.speak("Diga o nome da playlist que você quer que eu toque")
+                    retorno = "Diga o nome da playlist que você quer que eu toque"
+                    try:
+                        Music = r.listen(source)
+                        textAudio=(r.recognize_google(Music, language='pt-br'))
+                    except:
+                        print("Deu um Erro!!") 
+                    retorno = "Reproduzindo a playlist que você pediu!"
+                    voice.speak(retorno)
+                    spotify.selectPlaylist(textAudio)
                 
 
                 # Generate image with openai
@@ -151,6 +196,7 @@ def code():
                         n=1,
                         size="1024x1024"
                         )
+                        voice.speak("Gerando Imagem")
                         image_url = response['data'][0]['url']
                         print(image_url)
                         # Open the image in navegator
@@ -159,7 +205,7 @@ def code():
                         webbrowser.open(image_url)
                     except:
                         print("#####@ ERROR @#####")
-                    voice.speak("Gerando Imagem")
+                    
 
 
 

@@ -17,6 +17,7 @@ import classes.appManagement as app
 import classes.voice as voice
 import classes.spotify as spotify
 import database.database as db
+import classes.passwords as passwords
 
 
 # Pre-definitions
@@ -33,16 +34,19 @@ def timeGet():
 
 # Var pre-definitions
 context = " "
+textAudio = " "
+
 
 
 
 # Main funcion to back-end
 def code():
     # Globals
-    global textAudio, response, context
+    global textAudio, response, context, enter
 
     # Var pre-definitions
     context = " "
+    enter = " "
 
     # Creating the Speach Recognition and defines the openai key
     r = sr.Recognizer()
@@ -185,7 +189,7 @@ def code():
 
                 # Generate image with openai
                 elif db.question('modo geracao de imagem', textAudio):
-                    openai.api_key = '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'
+                    openai.api_key = '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'
                     voice.speak("Descreva a imagem que você deseja Gerar")
                     try:
                         basicAudio = r.listen(source)
@@ -205,17 +209,24 @@ def code():
                         webbrowser.open(image_url)
                     except:
                         print("#####@ ERROR @#####")
+
+
+                # Generate a password
+                elif db.question("gerar senha", textAudio):
+                    voice.speak("Gerando senha")
+                    response = passwords.genPassword(20)
+                    print(response)
+                    voice.speak("Senha gerada " + response)
                     
-
-
 
                 # Sends all the "elses" to chat-gpt
                 else:
                     try:
-                        openai.api_key = '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'
+                        openai.api_key = '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'
                         enter = context + "\n" + textAudio + "\n"
+                        print(enter)
                         responseOpenai = openai.ChatCompletion.create(
-                            model="gpt-3.5-turbo",
+                            model="gpt-3.5-turbo-0301",
                             messages=[
                                 {"role": "system", "content":enter}
                             ],

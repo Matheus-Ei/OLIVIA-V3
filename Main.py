@@ -44,11 +44,8 @@ def code():
     # Var pre-definitions
     context = " "
 
-
-
     # Creating the Speach Recognition and defines the openai key
     r = sr.Recognizer()
-
 
     # Loop to capture and recognize the sound of the microfone
     with sr.Microphone() as source:
@@ -143,7 +140,7 @@ def code():
 
                 # Generate image with openai
                 elif db.question('modo geracao de imagem', textAudio):
-                    openai.api_key = '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'
+                    openai.api_key = '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'
                     voice.speak("Descreva a imagem que você deseja Gerar")
                     try:
                         basicAudio = r.listen(source)
@@ -169,7 +166,7 @@ def code():
                 # Sends all the "elses" to chat-gpt
                 else:
                     try:
-                        openai.api_key = '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'
+                        openai.api_key = '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'
                         enter = context + "\n" + textAudio + "\n"
                         responseOpenai = openai.ChatCompletion.create(
                             model="gpt-3.5-turbo",

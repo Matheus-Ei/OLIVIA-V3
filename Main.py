@@ -15,7 +15,8 @@ import webbrowser
 # Libraris
 import classes.appManagement as app
 import classes.voice as voice
-import classes.other as other
+import classes.spotify as spotify
+import database.database as db
 
 
 # Pre-definitions
@@ -43,78 +44,10 @@ def code():
     # Var pre-definitions
     context = " "
 
-    # Creating the connection with the database
-    conn_str = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=database\mainDb.accdb;'
-    conn = pyodbc.connect(conn_str)
-    cursor = conn.cursor()
+
 
     # Creating the Speach Recognition and defines the openai key
     r = sr.Recognizer()
-
-    # Funcion to consult the questions to PROMETEU and check if they are in database
-    def question(question):
-        global textAudio
-        try:
-            # Execute a consult
-            cursor.execute('SELECT perg FROM question WHERE func = '+"'"+question+"';")
-            # Recover the consult data
-            rows = cursor.fetchall()
-            for row in rows:
-                roww = str(row[0])
-                if roww in textAudio:
-                    return True
-        except pyodbc.Error as e:
-            print(e)
-        
-    # Funcion to consult the answer that PROMETEU needs to gave
-    def answer(answer):
-        try:
-            # Execute a consult
-            cursor.execute('SELECT resp FROM answer WHERE func = '+"'"+answer+"';")
-            # Recover the consult data
-            rows = cursor.fetchall()
-            preResponse = []
-            cont = 0
-            for row in rows:
-                cont = cont + 1
-                roww = str(row[0])
-                preResponse.append(roww)
-            cont = cont-1
-            # Selects a random response and return
-            number = random.randint(0, cont)
-            response = preResponse[number]
-            return response
-        except pyodbc.Error as e:
-            print(e)
-
-    # Funcion to logs with database
-    def logs(textAudio, response):
-        time=datetime.now() 
-        hour = int(time.strftime("%H"))
-        minutes = int(time.strftime("%M"))
-        seconds = time.strftime("%S")
-        day = time.strftime("%d")
-        week = time.strftime("%A")
-        mounth = time.strftime("%B")
-        year = time.strftime("%Y")
-        try:
-            year = str(year)
-            mounth = str(mounth)
-            week = str(week)
-            day = str(day)
-            hour = str(hour)
-            minutes = str(minutes)
-            seconds = str(seconds)
-            # Defines the date
-            date = str(year+"/"+mounth+"/"+day+":"+week+"/"+hour+":"+minutes+":"+seconds)
-            response = str(response)
-            textAudio = str(textAudio)
-            cursor.execute("INSERT INTO logs(usuario, jarvis, data) VALUES ('"+textAudio+"','"+response+"','"+date+"');")
-            # Save the alterations in the logs tabble
-            conn.commit()
-        # If haves a exeption the code prints what exeption have
-        except pyodbc.Error as e:
-            print(e)
 
 
     # Loop to capture and recognize the sound of the microfone
@@ -134,7 +67,7 @@ def code():
 
 
                 # Open a app
-                if  question('abrir aplicativo'):
+                if  db.question('abrir aplicativo', textAudio):
                     # Ask what app the user wants open
                     voice.speak("Qual aplicativo voce deseja abrir?")
                     try:
@@ -146,7 +79,7 @@ def code():
 
                 
                 # Speak the time
-                elif question('horas'):
+                elif db.question('horas', textAudio):
                     global hour, minutes, seconds, day, week, mounth, year
                     timeGet()
                     response=("São %d e %d minutos" %(hour ,minutes))
@@ -154,62 +87,62 @@ def code():
 
 
                 # Ends the code
-                elif question('desligamento'):
-                    voice.speak(answer("desligamento")) 
+                elif db.question('desligamento', textAudio):
+                    voice.speak(db.answer("desligamento")) 
                     sys.exit()
 
 
                 # Code to execute comands in windows, like turn of or loggof
-                elif question("desligar sistema"):
-                    voice.speak(answer("desligar sistema"))
+                elif db.question("desligar sistema", textAudio):
+                    voice.speak(db.answer("desligar sistema"))
                     time.sleep(5)
                     os.system("shutdown /s /t 1")
 
-                elif question("sair sistema"):
-                    voice.speak(answer("sair sistema"))
+                elif db.question("sair sistema", textAudio):
+                    voice.speak(db.answer("sair sistema"))
                     time.sleep(5)
                     os.system("shutdown -l")
 
-                elif question("reiniciar sistema"):
-                    voice.speak(answer("reiniciar sistema"))
+                elif db.question("reiniciar sistema", textAudio):
+                    voice.speak(db.answer("reiniciar sistema"))
                     time.sleep(5)
                     os.system("shutdown /r /t 1")
 
 
                 # Reseta a variavel contexto do chat-gpt
-                elif question('mudar de assunto'):
+                elif db.question('mudar de assunto', textAudio):
                     context = "-"
-                    voice.speak(answer("mudar de assunto")) 
+                    voice.speak(db.answer("mudar de assunto")) 
 
 
                 # PyAutoGUI freatures
-                elif question("abrir gerenciador de tarefas"):
-                    voice.speak(answer("abrir gerenciador de tarefas"))
+                elif db.question("abrir gerenciador de tarefas", textAudio):
+                    voice.speak(db.answer("abrir gerenciador de tarefas"))
                     pyautogui.hotkey("ctrl", "shift", "esc")
 
-                elif question("visao geral das tarefas"):
-                    voice.speak(answer("visao geral das tarefas"))
+                elif db.question("visao geral das tarefas", textAudio):
+                    voice.speak(db.answer("visao geral das tarefas"))
                     pyautogui.hotkey("winleft", "tab")
 
-                elif question("nova area de trabalho"):
-                    voice.speak(answer("nova area de trabalho"))
+                elif db.question("nova area de trabalho", textAudio):
+                    voice.speak(db.answer("nova area de trabalho"))
                     pyautogui.hotkey("ctrl", "winleft", "d")
 
-                elif question("deletar area de trabalho"):
-                    voice.speak(answer("deletar area de trabalho"))
+                elif db.question("deletar area de trabalho", textAudio):
+                    voice.speak(db.answer("deletar area de trabalho"))
                     pyautogui.hotkey("ctrl", "winleft", "f4")
 
-                elif question("mover para a are de trabalho a esquerda"):
-                    voice.speak(answer("mover para a are de trabalho a esquerda"))
+                elif db.question("mover para a are de trabalho a esquerda", textAudio):
+                    voice.speak(db.answer("mover para a are de trabalho a esquerda"))
                     pyautogui.hotkey("ctrl", "winleft", "left")
 
-                elif question("mover para a are de trabalho a direita"):
-                    voice.speak(answer("mover para a are de trabalho a direita"))
+                elif db.question("mover para a are de trabalho a direita", textAudio):
+                    voice.speak(db.answer("mover para a are de trabalho a direita"))
                     pyautogui.hotkey("ctrl", "winleft", "right")
                 
 
                 # Generate image with openai
-                elif question('modo geracao de imagem'):
+                elif db.question('modo geracao de imagem', textAudio):
                     openai.api_key = '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'
                     voice.speak("Descreva a imagem que você deseja Gerar")
                     try:
@@ -238,26 +171,25 @@ def code():
                     try:
                         openai.api_key = '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'
                         enter = context + "\n" + textAudio + "\n"
-                        response = openai.ChatCompletion.create(
+                        responseOpenai = openai.ChatCompletion.create(
                             model="gpt-3.5-turbo",
                             messages=[
                                 {"role": "system", "content":enter}
                             ],
                             max_tokens=200
                         )
-                        chat = response['choices'][0]['message']['content']
-                        context += textAudio + "\n" + chat + "\n"
+                        response = responseOpenai['choices'][0]['message']['content']
+                        context += textAudio + "\n" + response + "\n"
                         print("---------")
                         print(context)
                         print("---------")
-                        voice.speak(chat)
+                        voice.speak(response)
                     except openai.APIError as e:
                         response = "Erro... Openai não respondendo..."
                         print(e)
                         voice.speak(response)
                         
-
-                logs(textAudio, chat)
+                db.logs(textAudio, response)
 
 
 

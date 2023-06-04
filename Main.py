@@ -9,6 +9,7 @@ import sys
 import os
 import time
 import pyautogui
+import webbrowser
 
 
 # Libraris
@@ -106,6 +107,8 @@ def code():
             seconds = str(seconds)
             # Defines the date
             date = str(year+"/"+mounth+"/"+day+":"+week+"/"+hour+":"+minutes+":"+seconds)
+            response = str(response)
+            textAudio = str(textAudio)
             cursor.execute("INSERT INTO logs(usuario, jarvis, data) VALUES ('"+textAudio+"','"+response+"','"+date+"');")
             # Save the alterations in the logs tabble
             conn.commit()
@@ -205,10 +208,35 @@ def code():
                     pyautogui.hotkey("ctrl", "winleft", "right")
                 
 
+                # Generate image with openai
+                elif question('modo geracao de imagem'):
+                    openai.api_key = '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'
+                    voice.speak("Descreva a imagem que você deseja Gerar")
+                    try:
+                        basicAudio = r.listen(source)
+                        textAudio=(r.recognize_google(basicAudio, language='pt-br'))
+
+                        response = openai.Image.create(
+                        prompt = "Imagem com o estilo cartoon realista e meio aquarela e criativa sobre: " + textAudio,
+                        n=1,
+                        size="1024x1024"
+                        )
+                        image_url = response['data'][0]['url']
+                        print(image_url)
+                        # Open the image in navegator
+                        retorno = "Abrindo a Imagem Gerada"
+                        voice.speak(retorno)
+                        webbrowser.open(image_url)
+                    except:
+                        print("#####@ ERROR @#####")
+                    voice.speak("Gerando Imagem")
+
+
+
                 # Sends all the "elses" to chat-gpt
                 else:
                     try:
-                        openai.api_key = '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'
+                        openai.api_key = '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'
                         enter = context + "\n" + textAudio + "\n"
                         response = openai.ChatCompletion.create(
                             model="gpt-3.5-turbo",
@@ -229,7 +257,7 @@ def code():
                         voice.speak(response)
                         
 
-                logs(textAudio, response)
+                logs(textAudio, chat)
 
 
 

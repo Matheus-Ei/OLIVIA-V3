@@ -145,7 +145,7 @@ def code():
                     spotify.next()
 
                 # Play in music
-                elif db.question('play musica'), textAudio:
+                elif db.question('play musica', textAudio):
                     db.answer("play musica")
                     voice.speak(retorno)
                     spotify.play()

@@ -18,6 +18,7 @@ import classes.voice as voice
 import classes.spotify as spotify
 import database.database as db
 import classes.passwords as passwords
+import classes.climate as climate
 
 
 # Pre-definitions
@@ -217,6 +218,10 @@ def code():
                     response = passwords.genPassword(20)
                     print(response)
                     voice.speak("Senha gerada " + response)
+
+
+                elif db.question("checar clima", textAudio):
+                    voice.speak(climate.getPrevision("Chapecó"))
                     
 
                 # Sends all the "elses" to chat-gpt

@@ -2,6 +2,7 @@
 import pyodbc
 import random
 from datetime import datetime
+import openai
 
 
 
@@ -78,3 +79,20 @@ def logs(textAudio, response):
     # If haves a exeption the code prints what exeption have
     except pyodbc.Error as e:
         print(e)
+
+
+def checkQuestionAi(checkvalue, textAudio):
+    openai.api_key = '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'
+    check = "me diga se essa frase: '"+textAudio+"' poderia ser usada para pedir para uma assistente pessoal o(a) '"+checkvalue+"', responda APENAS com 'true' ou 'false' não responda com nada mais, apenas uma dessas palavras"
+    responseOpenai = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-0301",
+        messages=[
+            {"role": "system", "content":check}
+        ],
+        max_tokens=200
+    )
+    responsecheck = responseOpenai['choices'][0]['message']['content']
+    responsecheck = responsecheck.lower() 
+    if "true" in responsecheck:
+        print("entrou em "+checkvalue)
+        return True

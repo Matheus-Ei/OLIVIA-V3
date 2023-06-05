@@ -67,7 +67,26 @@ def code():
         predicted_class_index = tf.argmax(prediction, axis=1).numpy()[0]
 
         # Definition of the possibles classes
-        classes = ["abrirApp", "horario", "desligarCode", "desligarWindows", "sairWindows", "reiniciarWindows", "mudarAssunto", "abrirGerenciadorTarefas", "visaoTarefas", "novaAreaTrabalho", "deletarAreaTrabalho", "moverAreaTrabalhoEsquerda", "moverAreaTrabalhoDireita", "pularMusica", "pausarMusica", "playMusica", "selecionarMusica", "selecionarPlaylist", "gerarImagem", "gerarSenha"]
+        classes = ["abrirApp", 
+                   "horario", 
+                   "desligarCode", 
+                   "desligarWindows", 
+                   "sairWindows", 
+                   "reiniciarWindows", 
+                   "mudarAssunto", 
+                   "abrirGerenciadorTarefas", 
+                   "visaoTarefas", 
+                   "novaAreaTrabalho", 
+                   "deletarAreaTrabalho", 
+                   "moverAreaTrabalhoEsquerda", 
+                   "moverAreaTrabalhoDireita", 
+                   "pularMusica", 
+                   "pausarMusica", 
+                   "playMusica", 
+                   "selecionarMusica", 
+                   "selecionarPlaylist", 
+                   "gerarImagem", 
+                   "gerarSenha"]
 
         predicted_class = classes[predicted_class_index]
         return predicted_class

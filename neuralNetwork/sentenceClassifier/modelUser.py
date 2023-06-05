@@ -18,7 +18,26 @@ def classificar_frase(frase):
     predicted_class_index = tf.argmax(prediction, axis=1).numpy()[0]
     
     # Obtendo a classe prevista
-    classes = ["abrirApp", "horario", "desligarCode", "desligarWindows", "sairWindows", "reiniciarWindows", "mudarAssunto", "abrirGerenciadorTarefas", "visaoTarefas", "novaAreaTrabalho", "deletarAreaTrabalho", "moverAreaTrabalhoEsquerda", "moverAreaTrabalhoDireita", "pularMusica", "pausarMusica", "playMusica", "selecionarMusica", "selecionarPlaylist", "gerarImagem", "gerarSenha"]
+    classes = ["abrirApp", 
+                "horario", 
+                "desligarCode", 
+                "desligarWindows", 
+                "sairWindows", 
+                "reiniciarWindows", 
+                "mudarAssunto", 
+                "abrirGerenciadorTarefas", 
+                "visaoTarefas", 
+                "novaAreaTrabalho", 
+                "deletarAreaTrabalho", 
+                "moverAreaTrabalhoEsquerda", 
+                "moverAreaTrabalhoDireita", 
+                "pularMusica", 
+                "pausarMusica", 
+                "playMusica", 
+                "selecionarMusica", 
+                "selecionarPlaylist", 
+                "gerarImagem", 
+                "gerarSenha"]
     predicted_class = classes[predicted_class_index]
     
     return predicted_class

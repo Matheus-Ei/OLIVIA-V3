@@ -5,8 +5,48 @@ from tensorflow.keras import layers
 import pickle
 
 # Dados de treinamento
-frases = ["abrir aplicativo", "que horas são?", "tchau, falou", "desligar o sistema", "sair do sistema", "reiniciar sistema", "mudar de assunto", "abrir o gerenciador de tarefas", "abrir a visão fas tarefas", "criar uma nova area de trabalho", "deletar uma area de trabalho", "area de trabalho anterior", "proxima area de trabalho", "pular essa musica vai para a proxima", "pausar essa musica", "toque a musica", "selecionar uma musica", "selecionar uma playlist", "gerar uma imagem", "gerar uma senha"]
-classes = ["abrirApp", "horario", "desligarCode", "desligarWindows", "sairWindows", "reiniciarWindows", "mudarAssunto", "abrirGerenciadorTarefas", "visaoTarefas", "novaAreaTrabalho", "deletarAreaTrabalho", "moverAreaTrabalhoEsquerda", "moverAreaTrabalhoDireita", "pularMusica", "pausarMusica", "playMusica", "selecionarMusica", "selecionarPlaylist", "gerarImagem", "gerarSenha"]
+frases = ["abrir aplicativo", 
+          "que horas são?", 
+          "tchau, falou", 
+          "desligar o sistema", 
+          "sair do sistema", 
+          "reiniciar sistema", 
+          "mudar de assunto", 
+          "abrir o gerenciador de tarefas", 
+          "abrir a visão fas tarefas", 
+          "criar uma nova area de trabalho", 
+          "deletar uma area de trabalho", 
+          "area de trabalho anterior", 
+          "proxima area de trabalho", 
+          "pular essa musica vai para a proxima", 
+          "pausar essa musica", 
+          "toque a musica", 
+          "selecionar uma musica", 
+          "selecionar uma playlist", 
+          "gerar uma imagem", 
+          "gerar uma senha"]
+
+classes = ["abrirApp", 
+           "horario", 
+           "desligarCode", 
+           "desligarWindows", 
+           "sairWindows", 
+           "reiniciarWindows", 
+           "mudarAssunto", 
+           "abrirGerenciadorTarefas", 
+           "visaoTarefas", 
+           "novaAreaTrabalho", 
+           "deletarAreaTrabalho", 
+           "moverAreaTrabalhoEsquerda", 
+           "moverAreaTrabalhoDireita", 
+           "pularMusica", 
+           "pausarMusica", 
+           "playMusica", 
+           "selecionarMusica", 
+           "selecionarPlaylist", 
+           "gerarImagem", 
+           "gerarSenha"]
+
 labels = np.zeros((len(frases), len(classes)))  # Matriz de rótulos inicialmente preenchida com zeros
 
 # Atribui 1 aos rótulos correspondentes

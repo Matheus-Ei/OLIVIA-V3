@@ -1,4 +1,4 @@
-abrir um aplicativo,abrirApp
+abrir um aplicativo executar um programa,abrirApp
 que horas são,horario
 tchau falou,desligarCode
 desligar o sistema,desligarWindows

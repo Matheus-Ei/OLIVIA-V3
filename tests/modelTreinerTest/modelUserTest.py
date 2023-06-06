@@ -3,9 +3,9 @@ from tensorflow import keras
 import pickle
 
 # Carregando o tokenizer e o modelo
-with open(r"modelTreinerTest\modeltreiner\tokenizer.pickle", "rb") as handle:
+with open(r"tests\modelTreinerTest\modeltreiner\tokenizer.pickle", "rb") as handle:
     tokenizer = pickle.load(handle)
-model = keras.models.load_model(r"modelTreinerTest\modeltreiner\modelo_classificador")
+model = keras.models.load_model(r"tests\modelTreinerTest\modeltreiner\modelo_classificador")
 
 # Função para classificar frases
 def classificar_frase(frase):
@@ -17,8 +17,17 @@ def classificar_frase(frase):
     prediction = model.predict(padded_sequence)
     predicted_class_index = tf.argmax(prediction, axis=1).numpy()[0]
     
-    classes = ["abrirApp", 
-                "horario"]
+    # Carregando frases e classes do arquivo de texto
+    frases = []
+    classes = []
+    with open(r"tests\modelTreinerTest\modeltreiner\frases_classes.txt", "r") as file:
+        lines = file.readlines()
+        for line in lines:
+            line = line.strip()
+            if line:
+                frases_classes = line.split(",")
+                frases.extend(frases_classes[0].split(";"))
+                classes.extend([frases_classes[1]])
 
     predicted_class = classes[predicted_class_index]
     

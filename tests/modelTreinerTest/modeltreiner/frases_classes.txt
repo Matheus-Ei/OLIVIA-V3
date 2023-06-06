@@ -1,2 +1,20 @@
-abrir um aplicativo;execute um programa;abrirApp;iniciar um software;abrirApp;rodar um programa;abrirApp;acessar um aplicativo;abrirApp;iniciar um app;abrirApp;lançar um programa;abrirApp;executar um aplicativo;abrirApp;iniciar uma aplicação;abrirApp;abrir um software;abrirApp;iniciar um app;abrirApp;iniciar um programa;abrirApp;acessar um programa;abrirApp;ativar um aplicativo;abrirApp;acessar um app;abrirApp;iniciar um aplicativo;abrirApp;abrir um programa;abrirApp;lançar um aplicativo;abrirApp;executar um software;abrirApp;ativar um programa;abrirApp;rodar um aplicativo;abrirApp;abrir um app;abrirApp;iniciar um software;abrirApp;executar uma aplicação;abrirApp;iniciar uma app;abrirApp;acessar uma aplicação;abrirApp;abrir um software;abrirApp;iniciar um app;abrirApp;iniciar um programa;abrirApp;acessar um programa;abrirApp;ativar um aplicativo;abrirApp;acessar um app;abrirApp;iniciar um aplicativo;abrirApp;abrir um programa;abrirApp;lançar um aplicativo;abrirApp;executar um software;abrirApp;ativar um programa;abrirApp;rodar um aplicativo;abrirApp;abrir um app;abrirApp;iniciar um software;abrirApp;executar uma aplicação;abrirApp;iniciar uma app;abrirApp;acessar uma aplicação;abrirApp;abrir um software;abrirApp;iniciar um app;abrirApp;iniciar um programa;abrirApp;acessar um programa;abrirApp;ativar um aplicativo;abrirApp;acessar um app;abrirApp;iniciar um aplicativo;abrirApp;abrir um programa;abrirApp;lançar um aplicativo;abrirApp;executar um software;abrirApp;ativar um programa;abrirApp;rodar um aplicativo;abrirApp;abrir um app;abrirApp;iniciar um software;abrirApp;executar uma aplicação;abrirApp;iniciar uma app;abrirApp;acessar uma aplicação;abrirApp;abrir um software;abrirApp;iniciar um app;abrirApp;iniciar um programa;abrirApp;acessar um programa;abrirApp;ativar um aplicativo;abrirApp;acessar um app;abrirApp;iniciar um aplicativo;abrirApp;abrir um programa;abrirApp;lançar um aplicativo;abrirApp;executar um software;abrirApp;ativar um programa;abrirApp;rodar um aplicativo;abrirApp;abrir um app;abrirApp;iniciar um software;abrirApp;executar uma aplicação;abrirApp;iniciar uma app;abrirApp;acessar uma aplicação;abrirApp;abrir um software;abrirApp;iniciar um app;abrirApp;iniciar um programa;abrirApp;acessar um programa,abrirApp
-que horas são;me diga as horas;horário atual;qual o horário;mostrar o relógio;exibir a hora;informe o horário;hora atual;que horas são agora;me informe as horas;me diga a hora;ver o relógio;dizer as horas;mostre-me a hora;que horas temos;me diga o horário;verificar a hora;qual é a hora;dar-me as horas;apresente o relógio;me conte as horas;mostre o horário;informe o horário atual;hora certa;indique as horas;exiba o horário;qual é o horário;mostre-me a hora correta;me diga a hora certa;ver a hora;qual a hora atual;mostrar as horas;informe-me o horário;horas atuais;me dê o horário;mostre o tempo;me fale a hora;exibir as horas;informe a hora atual;hora exata;que horas são aí;diga-me a hora;mostre-me o horário atual;me fale as horas;ver a hora atual;que horas temos agora;informe o horário atual;hora do sistema;me diga que horas são;mostre-me o relógio atual;verificar o horário;exibir o horário atual;qual o horário atual;mostrar a hora;me informe o horário atual;horas no momento;qual a hora agora;exiba o relógio;que horas são agora aí;informe as horas;mostrar o tempo;me diga a hora agora;ver a hora certa;mostre-me o horário atual;me informe o horário atual;horas correntes;que horas são aí agora;diga a hora;mostre o horário;exiba a hora;qual é a hora atual aí;apresente a hora;me conte o horário;mostrar o horário atual;informe a hora correta;hora do dia;me diga a hora correta;verificar as horas;qual é o horário agora;dar-me o horário;apresente o tempo;me fale a hora certa;exibir o horário do sistema,horario
+abrir um aplicativo,abrirApp
+que horas são,horario
+tchau falou,desligarCode
+desligar o sistema,desligarWindows
+sair do sistema,sairWindows
+reiniciar o sistema,reiniciarWindows
+mudar de assunto,mudarAssunto
+abrir o gerenciador de tarefas,abrirGerenciadorTarefas
+abrir a visão das tarefas,visaoTarefas
+criar uma nova área de trabalho,novaAreaTrabalho
+deletar uma área de trabalho,deletarAreaTrabalho
+área de trabalho anterior,moverAreaTrabalhoEsquerda
+próxima área de trabalho,moverAreaTrabalhoDireita
+pular essa música,pularMusica
+pausar essa música,pausarMusica
+toque a música,playMusica
+selecionar uma música,selecionarMusica
+selecionar uma playlist,selecionarPlaylist
+gerar uma imagem,gerarImagem
+gerar uma senha,gerarSenha

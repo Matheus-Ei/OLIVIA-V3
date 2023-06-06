@@ -3,49 +3,24 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 import pickle
+from keras.layers import Dense
 
-# Dados de treinamento
-frases = ["abrir um aplicativo", 
-          "que horas são",
-          "tchau, falou e até amanha", 
-          "desligar o sistema", 
-          "sair do sistema", 
-          "reiniciar sistema", 
-          "mudar de assunto", 
-          "abrir o gerenciador de tarefas", 
-          "abrir a visão fas tarefas", 
-          "criar uma nova area de trabalho", 
-          "deletar uma area de trabalho", 
-          "area de trabalho anterior", 
-          "proxima area de trabalho", 
-          "pular essa musica vai para a proxima", 
-          "pausar essa musica", 
-          "toque a musica", 
-          "selecionar uma musica", 
-          "selecionar uma playlist", 
-          "gerar uma imagem", 
-          "gerar uma senha"]
 
-classes = ["abrirApp", 
-           "horario", 
-           "desligarCode", 
-           "desligarWindows", 
-           "sairWindows", 
-           "reiniciarWindows", 
-           "mudarAssunto", 
-           "abrirGerenciadorTarefas", 
-           "visaoTarefas", 
-           "novaAreaTrabalho", 
-           "deletarAreaTrabalho", 
-           "moverAreaTrabalhoEsquerda", 
-           "moverAreaTrabalhoDireita", 
-           "pularMusica", 
-           "pausarMusica", 
-           "playMusica", 
-           "selecionarMusica", 
-           "selecionarPlaylist", 
-           "gerarImagem", 
-           "gerarSenha"]
+# Carregando frases e classes do arquivo de texto
+frases = []
+classes = []
+with open(r"neuralNetwork\sentenceClassifier\sentenceClasses.txt", "r") as file:
+    lines = file.readlines()
+    for line in lines:
+        line = line.strip()
+        if line:
+            frases_classes = line.split(",")
+            frases.extend(frases_classes[0].split(";"))
+            classes.extend([frases_classes[1]] * len(frases_classes[0].split(";")))
+print(classes)
+print(frases)
+
+
 labels = np.zeros((len(frases), len(classes)))  # Matriz de rótulos inicialmente preenchida com zeros
 
 # Atribui 1 aos rótulos correspondentes
@@ -71,11 +46,9 @@ model.add(layers.Dense(len(classes), activation="softmax"))  # Camada de saída 
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Treinamento do modelo
-model.fit(padded_sequences, labels, epochs=1000)
+model.fit(padded_sequences, labels, epochs=5000)
 
 # Salvando o tokenizer e o modelo treinado
 with open(r"neuralNetwork\sentenceClassifier\tokenizer.pickle", "wb") as handle:
     pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
 model.save(r"neuralNetwork\sentenceClassifier\modelo_classificador")
-
-

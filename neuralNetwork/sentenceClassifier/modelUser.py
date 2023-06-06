@@ -17,33 +17,24 @@ def classificar_frase(frase):
     prediction = model.predict(padded_sequence)
     predicted_class_index = tf.argmax(prediction, axis=1).numpy()[0]
     
-    # Obtendo a classe prevista
-    classes = ["abrirApp", 
-                "horario", 
-                "desligarCode", 
-                "desligarWindows", 
-                "sairWindows", 
-                "reiniciarWindows", 
-                "mudarAssunto", 
-                "abrirGerenciadorTarefas", 
-                "visaoTarefas", 
-                "novaAreaTrabalho", 
-                "deletarAreaTrabalho", 
-                "moverAreaTrabalhoEsquerda", 
-                "moverAreaTrabalhoDireita", 
-                "pularMusica", 
-                "pausarMusica", 
-                "playMusica", 
-                "selecionarMusica", 
-                "selecionarPlaylist", 
-                "gerarImagem", 
-                "gerarSenha"]
+    # Carregando frases e classes do arquivo de texto
+    frases = []
+    classes = []
+    with open(r"neuralNetwork\sentenceClassifier\sentenceClasses.txt", "r") as file:
+        lines = file.readlines()
+        for line in lines:
+            line = line.strip()
+            if line:
+                frases_classes = line.split(",")
+                frases.extend(frases_classes[0].split(";"))
+                classes.extend([frases_classes[1]])
+
     predicted_class = classes[predicted_class_index]
     
     return predicted_class
 
+# Exemplo de uso
 while True:
-    frase = input("Diga uma frase para ser classificada: ")
+    frase = input("Diga a frase que você deseja classificar: ")
     resultado = classificar_frase(frase)
     print(frase, "=> Classe:", resultado)
-

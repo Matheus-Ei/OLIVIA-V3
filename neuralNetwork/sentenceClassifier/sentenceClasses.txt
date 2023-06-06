@@ -1,0 +1,20 @@
+abrir um aplicativo; executar um programa,abrirApp
+que horas são; me diga a hora,horario
+tchau falou,desligarCode
+desligar o sistema,desligarWindows
+sair do sistema,sairWindows
+reiniciar o sistema,reiniciarWindows
+mudar de assunto,mudarAssunto
+abrir o gerenciador de tarefas,abrirGerenciadorTarefas
+abrir a visão das tarefas,visaoTarefas
+criar uma nova área de trabalho,novaAreaTrabalho
+deletar uma área de trabalho,deletarAreaTrabalho
+área de trabalho anterior,moverAreaTrabalhoEsquerda
+próxima área de trabalho,moverAreaTrabalhoDireita
+pular essa música,pularMusica
+pausar essa música,pausarMusica
+toque a música,playMusica
+selecionar uma música,selecionarMusica
+selecionar uma playlist,selecionarPlaylist
+gerar uma imagem,gerarImagem
+gerar uma senha,gerarSenha

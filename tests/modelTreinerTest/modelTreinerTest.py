@@ -3,7 +3,9 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 import pickle
-
+from keras.layers import Dense
+from keras.layers import LSTM
+from keras.layers import Dropout
 
 # Carregando frases e classes do arquivo de texto
 frases = []
@@ -18,7 +20,6 @@ with open(r"tests\modelTreinerTest\modeltreiner\frases_classes.txt", "r") as fil
             classes.extend([frases_classes[1]] * len(frases_classes[0].split(";")))
 print(classes)
 print(frases)
-
 
 labels = np.zeros((len(frases), len(classes)))  # Matriz de rótulos inicialmente preenchida com zeros
 
@@ -40,12 +41,25 @@ padded_sequences = keras.preprocessing.sequence.pad_sequences(sequences, maxlen=
 model = keras.Sequential()
 model.add(layers.Embedding(vocab_size, 16, input_length=max_length))
 model.add(layers.GlobalAveragePooling1D())
+model.add(Dense(units=5, activation='relu'))
+model.add(layers.Reshape((1, -1)))  # Reshape para adicionar uma dimensão extra
+model.add(LSTM(128))
+model.add(Dense(units=5, activation='relu'))
+model.add(Dropout(0.2))
+model.add(layers.Reshape((1, -1)))  # Reshape para adicionar uma dimensão extra
+model.add(LSTM(128))
+model.add(Dense(units=5, activation='relu'))
+model.add(Dropout(0.2))
+model.add(layers.Reshape((1, -1)))  # Reshape para adicionar uma dimensão extra
+model.add(LSTM(128))
+model.add(Dense(units=5, activation='relu'))
+model.add(Dropout(0.2))
 model.add(layers.Dense(len(classes), activation="softmax"))  # Camada de saída com um neurônio para cada classe
 
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Treinamento do modelo
-model.fit(padded_sequences, labels, epochs=1000)
+model.fit(padded_sequences, labels, epochs=100000)
 
 # Salvando o tokenizer e o modelo treinado
 with open(r"tests\modelTreinerTest\modeltreiner\tokenizer.pickle", "wb") as handle:

@@ -59,37 +59,25 @@ def code():
     with open(r"neuralNetwork\sentenceClassifier\tokenizer.pickle", "rb") as handle:
         tokenizer = pickle.load(handle)
     model = keras.models.load_model(r"neuralNetwork\sentenceClassifier\modelo_classificador")
-    # funcion to classify the sentences
+    # Funcion to separate the frases and classify
     def classificar_frase(frase):
         sequence = tokenizer.texts_to_sequences([frase])
         padded_sequence = keras.preprocessing.sequence.pad_sequences(sequence, maxlen=model.input_shape[1], padding="post")
         prediction = model.predict(padded_sequence)
         predicted_class_index = tf.argmax(prediction, axis=1).numpy()[0]
-
-        # Definition of the possibles classes
-        classes = ["abrirApp", 
-                   "horario", 
-                   "desligarCode", 
-                   "desligarWindows", 
-                   "sairWindows", 
-                   "reiniciarWindows", 
-                   "mudarAssunto", 
-                   "abrirGerenciadorTarefas", 
-                   "visaoTarefas", 
-                   "novaAreaTrabalho", 
-                   "deletarAreaTrabalho", 
-                   "moverAreaTrabalhoEsquerda", 
-                   "moverAreaTrabalhoDireita", 
-                   "pularMusica", 
-                   "pausarMusica", 
-                   "playMusica", 
-                   "selecionarMusica", 
-                   "selecionarPlaylist", 
-                   "gerarImagem", 
-                   "gerarSenha"]
-
+        frases = []
+        classes = []
+        with open(r"neuralNetwork\sentenceClassifier\sentenceClasses.txt", "r") as file:
+            lines = file.readlines()
+            for line in lines:
+                line = line.strip()
+                if line:
+                    frases_classes = line.split(",")
+                    frases.extend(frases_classes[0].split(";"))
+                    classes.extend([frases_classes[1]])
         predicted_class = classes[predicted_class_index]
         return predicted_class
+
     
 
     # Loop to capture and recognize the sound of the microfone

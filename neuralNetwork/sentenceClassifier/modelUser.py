@@ -42,9 +42,8 @@ def classificar_frase(frase):
     
     return predicted_class
 
-# Exemplo de uso
 while True:
-    frase = input("Diga a frase que você deseja classificar: ")
+    frase = input("Diga uma frase para ser classificada: ")
     resultado = classificar_frase(frase)
     print(frase, "=> Classe:", resultado)
 

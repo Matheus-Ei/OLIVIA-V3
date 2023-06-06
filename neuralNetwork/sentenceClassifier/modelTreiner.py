@@ -5,9 +5,9 @@ from tensorflow.keras import layers
 import pickle
 
 # Dados de treinamento
-frases = ["abrir aplicativo", 
-          "que horas são?", 
-          "tchau, falou", 
+frases = ["abrir um aplicativo", 
+          "que horas são",
+          "tchau, falou e até amanha", 
           "desligar o sistema", 
           "sair do sistema", 
           "reiniciar sistema", 
@@ -46,7 +46,6 @@ classes = ["abrirApp",
            "selecionarPlaylist", 
            "gerarImagem", 
            "gerarSenha"]
-
 labels = np.zeros((len(frases), len(classes)))  # Matriz de rótulos inicialmente preenchida com zeros
 
 # Atribui 1 aos rótulos correspondentes
@@ -72,9 +71,11 @@ model.add(layers.Dense(len(classes), activation="softmax"))  # Camada de saída 
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Treinamento do modelo
-model.fit(padded_sequences, labels, epochs=10000)
+model.fit(padded_sequences, labels, epochs=1000)
 
 # Salvando o tokenizer e o modelo treinado
 with open(r"neuralNetwork\sentenceClassifier\tokenizer.pickle", "wb") as handle:
     pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
 model.save(r"neuralNetwork\sentenceClassifier\modelo_classificador")
+
+

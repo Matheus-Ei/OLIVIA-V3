@@ -1,14 +1,9 @@
-# r"modelTreinerTest\modeltreiner\frases_classes.txt"
-# r"modelTreinerTest\modeltreiner\tokenizer.pickle"
-# r"modelTreinerTest\modeltreiner\modelo_classificador"
-
-
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from tensorflow.keras import regularizers
 import pickle
+
 
 # Carregando frases e classes do arquivo de texto
 frases = []
@@ -20,17 +15,16 @@ with open(r"tests\modelTreinerTest\modeltreiner\frases_classes.txt", "r") as fil
         if line:
             frases_classes = line.split(",")
             frases.extend(frases_classes[0].split(";"))
-            classes.extend([frases_classes[1]])
-            #classes.extend([frases_classes[1]] * len(frases_classes[0].split(";")))
+            classes.extend([frases_classes[1]] * len(frases_classes[0].split(";")))
+print(classes)
+print(frases)
 
-# Transformando classes em um conjunto para obter todas as classes únicas
-unique_classes = list(set(classes))
 
-# Mapeando cada classe única para um índice numérico
-class_to_index = {classe: i for i, classe in enumerate(unique_classes)}
+labels = np.zeros((len(frases), len(classes)))  # Matriz de rótulos inicialmente preenchida com zeros
 
-# Convertendo as classes em rótulos numéricos
-labels = np.array([class_to_index[classe] for classe in classes])
+# Atribui 1 aos rótulos correspondentes
+for i, classe in enumerate(classes):
+    labels[:, i] = np.array([classe == c for c in classes])
 
 # Pré-processamento dos dados de entrada
 tokenizer = keras.preprocessing.text.Tokenizer()
@@ -45,21 +39,15 @@ padded_sequences = keras.preprocessing.sequence.pad_sequences(sequences, maxlen=
 # Modelo de rede neural
 model = keras.Sequential()
 model.add(layers.Embedding(vocab_size, 16, input_length=max_length))
-model.add(layers.Bidirectional(layers.GRU(32, return_sequences=True)))
-model.add(layers.Bidirectional(layers.GRU(32)))
-model.add(layers.Dense(64, activation='relu', kernel_regularizer=regularizers.l2(0.01)))
-model.add(layers.Dropout(0.5))
-model.add(layers.Dense(len(unique_classes), activation="softmax"))
+model.add(layers.GlobalAveragePooling1D())
+model.add(layers.Dense(len(classes), activation="softmax"))  # Camada de saída com um neurônio para cada classe
 
-model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-# Ajuste de hiperparâmetros e treinamento do modelo
-model.fit(padded_sequences, labels, epochs=10000, batch_size=32, validation_split=0.2)
+# Treinamento do modelo
+model.fit(padded_sequences, labels, epochs=1000)
 
 # Salvando o tokenizer e o modelo treinado
 with open(r"tests\modelTreinerTest\modeltreiner\tokenizer.pickle", "wb") as handle:
     pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
 model.save(r"tests\modelTreinerTest\modeltreiner\modelo_classificador")
-
-
-

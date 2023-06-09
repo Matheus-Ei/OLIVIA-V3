@@ -4,6 +4,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import pickle
 from keras.layers import Dense
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 
 
 # Carregando frases e classes do arquivo de texto
@@ -37,16 +38,32 @@ vocab_size = len(tokenizer.word_index) + 1
 max_length = max(len(seq) for seq in sequences)
 padded_sequences = keras.preprocessing.sequence.pad_sequences(sequences, maxlen=max_length, padding="post")
 
+# Criar um objeto EarlyStopping
+early_stopping = EarlyStopping(
+    monitor='accuracy',  # Métrica de perda no conjunto de validação
+    patience=300,  # Número de épocas sem melhoria após as quais o treinamento é interrompido
+    mode='max',  # Modo da métrica (por exemplo, 'min' para minimizar a métrica)
+    verbose=1  # Exibir mensagens de status durante a parada antecipada
+)
+
 # Modelo de rede neural
 model = keras.Sequential()
 model.add(layers.Embedding(vocab_size, 16, input_length=max_length))
 model.add(layers.GlobalAveragePooling1D())
+
+model.add(layers.Dropout(0.2))  # Camada de Dropout com taxa de 20%
+model.add(layers.Dense(64, activation="relu"))
+
+model.add(layers.Dropout(0.5))  # Camada de Dropout com taxa de 20%
+model.add(layers.Dense(64, activation="relu"))
+model.add(layers.Dropout(0.5))  # Camada de Dropout com taxa de 20%
+
 model.add(layers.Dense(len(classes), activation="softmax"))  # Camada de saída com um neurônio para cada classe
 
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Treinamento do modelo
-model.fit(padded_sequences, labels, epochs=5000)
+model.fit(padded_sequences, labels, epochs=2000, callbacks=[early_stopping])
 
 # Salvando o tokenizer e o modelo treinado
 with open(r"neuralNetwork\sentenceClassifier\tokenizer.pickle", "wb") as handle:

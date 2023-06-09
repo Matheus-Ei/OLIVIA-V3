@@ -1,5 +1,5 @@
-abrir um aplicativo; executar um programa,abrirApp
-que horas são; me diga a hora,horario
+abrir um aplicativo,abrirApp
+que horas são,horario
 tchau falou,desligarCode
 desligar o sistema,desligarWindows
 sair do sistema,sairWindows

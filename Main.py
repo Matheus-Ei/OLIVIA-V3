@@ -55,31 +55,6 @@ def code():
     # Creating the Speach Recognition and defines the openai key
     r = sr.Recognizer()
 
-    # Loading the tokenizer and the model
-    with open(r"neuralNetwork\sentenceClassifier\tokenizer.pickle", "rb") as handle:
-        tokenizer = pickle.load(handle)
-    model = keras.models.load_model(r"neuralNetwork\sentenceClassifier\modelo_classificador")
-    # Funcion to separate the frases and classify
-    def classificar_frase(frase):
-        sequence = tokenizer.texts_to_sequences([frase])
-        padded_sequence = keras.preprocessing.sequence.pad_sequences(sequence, maxlen=model.input_shape[1], padding="post")
-        prediction = model.predict(padded_sequence)
-        predicted_class_index = tf.argmax(prediction, axis=1).numpy()[0]
-        frases = []
-        classes = []
-        with open(r"neuralNetwork\sentenceClassifier\sentenceClasses.txt", "r") as file:
-            lines = file.readlines()
-            for line in lines:
-                line = line.strip()
-                if line:
-                    frases_classes = line.split(",")
-                    frases.extend(frases_classes[0].split(";"))
-                    classes.extend([frases_classes[1]])
-        predicted_class = classes[predicted_class_index]
-        return predicted_class
-
-    
-
     # Loop to capture and recognize the sound of the microfone
     with sr.Microphone() as source:
         print("->starting audio adjustment<-")
@@ -123,13 +98,8 @@ def code():
 
 
                 else:
-                    # Getting the class of the textAudio
-                    neuralResult = classificar_frase(textAudio)
-                    print(textAudio, "=> Classe:", neuralResult)
-
-
                     # Open a app
-                    if  neuralResult == "abrirApp":
+                    if  db.question("abrir aplicativo", textAudio):
                         # Ask what app the user wants open
                         voice.speak("Qual aplicativo voce deseja abrir?")
                         try:
@@ -141,7 +111,7 @@ def code():
 
                     
                     # Speak the time
-                    elif neuralResult == "horario":
+                    elif db.question("horas", textAudio):
                         global hour, minutes, seconds, day, week, mounth, year
                         timeGet()
                         response=("São %d e %d minutos" %(hour ,minutes))
@@ -149,80 +119,80 @@ def code():
 
 
                     # Ends the code
-                    elif neuralResult == "desligarCode":
+                    elif db.question("desligamento", textAudio):
                         voice.speak(db.answer("desligamento")) 
                         sys.exit()
 
 
                     # Code to execute comands in windows, like turn of or loggof
-                    elif neuralResult == "desligarWindows":
+                    elif db.question("desligar sistema", textAudio):
                         voice.speak(db.answer("desligar sistema"))
                         time.sleep(5)
                         os.system("shutdown /s /t 1")
 
-                    elif neuralResult == "sairWindows":
+                    elif db.question("sair sistema", textAudio):
                         voice.speak(db.answer("sair sistema"))
                         time.sleep(5)
                         os.system("shutdown -l")
 
-                    elif neuralResult == "reiniciarWindows":
+                    elif db.question("reiniciar sistema", textAudio):
                         voice.speak(db.answer("reiniciar sistema"))
                         time.sleep(5)
                         os.system("shutdown /r /t 1")
 
 
-                    # Reseta a variavel contexto do chat-gpt
-                    elif neuralResult == "mudarAssunto":
+                    # Reset the var of context in the GPT-Chat
+                    elif db.question("mudar de assunto", textAudio):
                         context = "-"
                         voice.speak(db.answer("mudar de assunto")) 
 
 
                     # PyAutoGUI freatures
-                    elif neuralResult == "abrirGerenciadorTarefas":
+                    elif db.question("abrir gerenciador de tarefas", textAudio):
                         voice.speak(db.answer("abrir gerenciador de tarefas"))
                         pyautogui.hotkey("ctrl", "shift", "esc")
 
-                    elif neuralResult == "visaoTarefas":
+                    elif db.question("visao geral das tarefas", textAudio):
                         voice.speak(db.answer("visao geral das tarefas"))
                         pyautogui.hotkey("winleft", "tab")
 
-                    elif neuralResult == "novaAreaTrabalho":
+                    elif db.question("nova area de trabalho", textAudio):
                         voice.speak(db.answer("nova area de trabalho"))
                         pyautogui.hotkey("ctrl", "winleft", "d")
 
-                    elif neuralResult == "deletarAreaTrabalho":
+                    elif db.question("deletar area de trabalho", textAudio):
                         voice.speak(db.answer("deletar area de trabalho"))
                         pyautogui.hotkey("ctrl", "winleft", "f4")
 
-                    elif neuralResult == "moverAreaTrabalhoEsquerda":
+                    elif db.question("mover para a area de trabalho a esquerda", textAudio):
                         voice.speak(db.answer("mover para a are de trabalho a esquerda"))
                         pyautogui.hotkey("ctrl", "winleft", "left")
 
-                    elif neuralResult == "moverAreaTrabalhoDireita":
+                    elif db.question("mover para a are de trabalho a direita", textAudio):
                         voice.speak(db.answer("mover para a are de trabalho a direita"))
                         pyautogui.hotkey("ctrl", "winleft", "right")
 
 
                     # Next song in spotify
-                    elif neuralResult == "pularMusica":
-                        db.answer("pular musica")
+                    elif db.question("pular musica", textAudio):
+                        retorno = db.answer("pular musica")
                         voice.speak(retorno)
                         spotify.next()
 
                     # Play in music
-                    elif neuralResult == "playMusica":
-                        db.answer("play musica")
+                    elif db.question("play musica", textAudio):
+                        retorno = db.answer("play musica")
                         voice.speak(retorno)
                         spotify.play()
 
                     # Pause in music
-                    elif neuralResult == "pausarMusica":
-                        db.answer("pausar musica")
+                    elif db.question("pausar musica", textAudio):
+                        retorno = db.answer("pausar musica")
                         voice.speak(retorno)
                         spotify.pause()
                                         
                     # Select a music
-                    elif neuralResult == "selecionarMusica":
+                    elif db.question("selecionar musica", textAudio):
                         voice.speak("Diga o nome da musica que você quer que eu toque")
                         retorno = "Diga o nome da musica que você quer que eu toque"
                         try:
@@ -235,7 +205,7 @@ def code():
                         spotify.selectSong(textAudio)
 
                     # Selects a playlist
-                    elif neuralResult == "selecionarPlaylist":
+                    elif db.question("tocar playlist", textAudio):
                         voice.speak("Diga o nome da playlist que você quer que eu toque")
                         retorno = "Diga o nome da playlist que você quer que eu toque"
                         try:
@@ -249,7 +219,7 @@ def code():
                     
 
                     # Generate image with openai
-                    elif neuralResult == "gerarImagem":
+                    elif db.question("modo geracao de imagem", textAudio):
                         openai.api_key = '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'
                         voice.speak("Descreva a imagem que você deseja Gerar")
                         try:
@@ -273,33 +243,23 @@ def code():
 
 
                     # Generate a password
-                    elif neuralResult == "gerarSenha":
+                    elif db.question("gerar senha", textAudio):
                         voice.speak("Gerando senha")
                         response = passwords.genPassword(20)
                         print(response)
                         voice.speak("Senha gerada " + response)
 
 
-                    elif neuralResult == "":
+                    elif db.question("checar clima", textAudio):
                         voice.speak(climate.getPrevision("Chapecó"))
                         
                 db.logs(textAudio, response)
 
 
 
-
-
-
             # Para valores não identificados
             except sr.UnknownValueError:
                 print("...")
-
-
-
-
-
-
-
 
 
 

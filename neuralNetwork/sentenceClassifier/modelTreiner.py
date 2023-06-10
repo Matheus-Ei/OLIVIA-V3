@@ -50,20 +50,13 @@ early_stopping = EarlyStopping(
 model = keras.Sequential()
 model.add(layers.Embedding(vocab_size, 16, input_length=max_length))
 model.add(layers.GlobalAveragePooling1D())
-
 model.add(layers.Dropout(0.2))  # Camada de Dropout com taxa de 20%
-model.add(layers.Dense(64, activation="relu"))
-
-model.add(layers.Dropout(0.5))  # Camada de Dropout com taxa de 20%
-model.add(layers.Dense(64, activation="relu"))
-model.add(layers.Dropout(0.5))  # Camada de Dropout com taxa de 20%
-
 model.add(layers.Dense(len(classes), activation="softmax"))  # Camada de saída com um neurônio para cada classe
 
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Treinamento do modelo
-model.fit(padded_sequences, labels, epochs=2000, callbacks=[early_stopping])
+model.fit(padded_sequences, labels, epochs=2000)
 
 # Salvando o tokenizer e o modelo treinado
 with open(r"neuralNetwork\sentenceClassifier\tokenizer.pickle", "wb") as handle:

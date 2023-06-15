@@ -37,10 +37,10 @@ def speak(data):
 # Function for fast speech, but with lower quality
 def fast_speak(texto):
     engine = pyttsx3.init() # Starts the text-speack
-    engine.save_to_file(texto, "Sons/data.mp3")
-    engine.setProperty("rate", 400) # Speed Change
+    engine.save_to_file(texto, "sounds/voice/data.mp3")
+    engine.setProperty("rate", 1000) # Speed Change
     engine.runAndWait()
-    audio = AudioSegment.from_wav("Sons/data.mp3")
+    audio = AudioSegment.from_wav("sounds/voice/data.mp3")
     volume_adjustment = 6 # Adjusts the volume
     audio = audio + volume_adjustment
     play(audio)

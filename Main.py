@@ -39,6 +39,7 @@ def timeGet():
 # Var pre-definitions
 context = " "
 textAudio = " "
+response = " "
 
 
 
@@ -251,7 +252,8 @@ def code():
 
 
                     elif db.question("checar clima", textAudio):
-                        voice.speak(climate.getPrevision("Chapecó"))
+                        prevClimate = str(climate.getPrevision("Chapecó"))
+                        voice.speak(prevClimate)
                         
                 db.logs(textAudio, response)
 

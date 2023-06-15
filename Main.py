@@ -1,8 +1,6 @@
 # Imports
 import speech_recognition as sr
 import threading
-import pyodbc
-import random
 from datetime import datetime
 import openai
 import sys
@@ -10,9 +8,9 @@ import os
 import time
 import pyautogui
 import webbrowser
-import tensorflow as tf
-from tensorflow import keras
-import pickle
+import pygetwindow as gw
+import pyautogui
+from pywinauto import Desktop
 
 
 # Libraris
@@ -22,6 +20,7 @@ import classes.spotify as spotify
 import database.database as db
 import classes.passwords as passwords
 import classes.climate as climate
+import classes.listening as listening
 
 
 # Pre-definitions
@@ -221,26 +220,33 @@ def code():
 
                     # Generate image with openai
                     elif db.question("modo geracao de imagem", textAudio):
-                        openai.api_key = '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'
-                        voice.speak("Descreva a imagem que você deseja Gerar")
-                        try:
-                            basicAudio = r.listen(source)
-                            textAudio=(r.recognize_google(basicAudio, language='pt-br'))
+                        gerarOutraImagem = True
+                        while gerarOutraImagem == True:
+                            openai.api_key = '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'
+                            voice.speak("Descreva a imagem que você deseja Gerar")
+                            try:
+                                textAudio = listening.listening()
+                                voice.speak("Gerando Imagem " + textAudio)
 
-                            response = openai.Image.create(
-                            prompt = "Imagem com o estilo cartoon realista e meio aquarela e criativa sobre: " + textAudio,
-                            n=1,
-                            size="1024x1024"
-                            )
-                            voice.speak("Gerando Imagem")
-                            image_url = response['data'][0]['url']
-                            print(image_url)
-                            # Open the image in navegator
-                            retorno = "Abrindo a Imagem Gerada"
-                            voice.speak(retorno)
-                            webbrowser.open(image_url)
-                        except:
-                            print("#####@ ERROR @#####")
+                                response = openai.Image.create(
+                                prompt = textAudio,
+                                n=1,
+                                size="1024x1024"
+                                )
+                                image_url = response['data'][0]['url']
+                                print(image_url)
+                                # Open the image in navegator
+                                retorno = "Abrindo a Imagem Gerada"
+                                voice.speak(retorno)
+                                webbrowser.open(image_url)
+                            except:
+                                print("#####@ ERROR @#####")
+
+                            voice.speak("Você deseja gerar outra imagem?")
+                            textAudio = listening.listening()
+                            if "não" in textAudio:
+                                voice.speak("Beleza, eu não irei gerar outra imagem")
+                                gerarOutraImagem = False
 
 
                     # Generate a password
@@ -251,9 +257,25 @@ def code():
                         voice.speak("Senha gerada " + response)
 
 
+                    # Get the climate prevision
                     elif db.question("checar clima", textAudio):
                         prevClimate = str(climate.getPrevision("Chapecó"))
                         voice.speak(prevClimate)
+
+
+                    # Reset the execution of the code
+                    elif db.question("reiniciar o codigo", textAudio):
+                        voice.speak("Reiniciando a execução do código")
+                        nome_procurado = "Visual Studio Code" # Search the name of the app
+
+                        desktop = Desktop(backend="uia")
+                        janela = desktop.window(title_re=".*{}.*".format(nome_procurado))
+                        janela.set_focus() # Activate the window
+
+                        print(janela)
+
+                        pyautogui.hotkey("ctrl", "shift", "f5")                        
+
                         
                 db.logs(textAudio, response)
 

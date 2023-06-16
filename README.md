@@ -21,7 +21,6 @@ Assistent v2, His name is Prometeu
 **JANELAS DO WINDOWS E WEB:**
 - Gerenciamento de Janelas 
 - Pesquisas no Google, Wikipedia, Youtube, etc...
-- Envio de Emails
 - Previsão do Tempo
 - Noticias e Atualidades
 
@@ -75,7 +74,7 @@ Assistent v2, His name is Prometeu
 - GUI para Finanças
 - GUI para Pesquisas
 - GUI para Planejamento de Viagens
-- GUI para Gestão de Projetos
+- GUI para Gestão de Projetos e Acompanhamento de Metas
 
 
 **IMAGENS:**

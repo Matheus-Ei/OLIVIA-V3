@@ -12,9 +12,7 @@ Assistent v2, His name is Prometeu
 
 ## Futuras Funcionalidades para Adicionar no Assistente
 **MODOS:**
-- Emergencia
-- Modo Jarvis
-  - Quando ativado o assistente só responde quando na frase falada há a palavra "Jarvis"
+- Modos para Diferentes Tipos de Emergencia
 - Modo Música
   - Quando ativado o assistente só responde a comandos relacionados a música
 - Modos Especificos para Diferentes Situações
@@ -28,10 +26,21 @@ Assistent v2, His name is Prometeu
 - Noticias e Atualidades
 
 
+**COMUNICAÇÃO**
+- Envio de Mensagens pelo Whatsapp
+- Envio de Emails
+- Envio de Mensagens pelo Discord
+
+
+**SERVIDOR E INTER-COMUNICAÇÃO**
+- Possibilidade de Enviar Comandos por Outros Dispositivos
+- Envio de Imagens, Audio e Vídeo para Outros Dispositivos
+- Transmissão de Tela para Outros Dispositivos
+
+
 **RECONHECIMENTO E REPRODUÇÃO DE FALA:**
 - Reconhecimento de Objetos por Imagem
 - Reconhecimento de Voz
-  - Rápido e Preciso
 - Reconhecimento Facial de Segurança
 - Texto para Fala
   - Rápida e sem Qualidade
@@ -54,6 +63,7 @@ Assistent v2, His name is Prometeu
   - Pode Inserir Novas Listas
   - Pode Verificar as Listas
   - Pode Deletar Listas Criadas se o Usuario Pedir
+- Sistema de Gestão Financeira
 
 
 **GUI E INTERFACE:**
@@ -63,13 +73,22 @@ Assistent v2, His name is Prometeu
 - GUI do MAPS
 - GUI dos Compromissos e Listas
 - GUI para Finanças
-- GUI para pesquisas
+- GUI para Pesquisas
+- GUI para Planejamento de Viagens
+- GUI para Gestão de Projetos
 
 
 **IMAGENS:**
 - Geração de Imagens
 - Edição de Imagens
 - Variação de Imagens
+
+
+**PLANEJAMENTOS**
+- Planejamento de Viagens Personalizado
+- Planejamento e Gerenciamento de Eventos
+- Suporte a Gestão de Projetos
+- Assistência em Compras Online
 
 
 **LOCALIZAÇÃO:**
@@ -82,6 +101,7 @@ Assistent v2, His name is Prometeu
 - Reprodução e Gerenciamento das Musicas, Audios e Videos
 - Gravação de Audio e Video Automatizado
 - Reprodução e Gerenciamento de Musicas e Podcasts do Spotfy
+- Criação Automática de Resumos e Transcrições de Audios e Vídeos
 
 
 **REDE E COMPUTADOR:**
@@ -108,3 +128,4 @@ Assistent v2, His name is Prometeu
 
 **OUTROS:**
 - Gerenciamento de Impressões em 2D
+- Gerenciamento de Impressões em 3D

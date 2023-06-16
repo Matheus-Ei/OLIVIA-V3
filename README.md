@@ -1,18 +1,6 @@
 # PROMET.EU
 Assistent v2, His name is Prometeu
 
-## Próximas Alterações a Serem Feitas
-
-## O Quanto eu Estou Disposto a Investir Nesse Projeto
-- 25/M Canva
-- 25/M Host
-- 100/M Publicidade Paga(Nos Primeiros 3 Meses Usar apenas Trafego Organico)
-- Total Mensal=>150R$/M(50R$ nos Primeiros 3 Meses)
-
-# Retorno Estimado
-- Em Média 2 Vendas por Mes nos Primeiros 3 Meses, Cada venda por 25R$ -> 50R$/M
-- Nos Proximos 3 Meses uma Média de 4 Vendas por Mes, Cada venda por 25R$ -> 100R$/M
-
 ## Requisitos para usar o Assistente:
 - 01 Notebook ou PC
 - Sistema Operacional Windows

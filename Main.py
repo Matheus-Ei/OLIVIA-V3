@@ -21,6 +21,7 @@ import database.database as db
 import classes.passwords as passwords
 import classes.climate as climate
 import classes.listening as listening
+import classes.openai as openaifreatures
 
 
 # Pre-definitions
@@ -52,7 +53,7 @@ def code():
     context = " "
     enter = " "
 
-    # Creating the Speach Recognition and defines the openai key
+    # Creating the Speech Recognition and defines the openai key
     r = sr.Recognizer()
 
     # Loop to capture and recognize the sound of the microfone
@@ -274,7 +275,55 @@ def code():
 
                         print(janela)
 
-                        pyautogui.hotkey("ctrl", "shift", "f5")                        
+                        pyautogui.hotkey("ctrl", "shift", "f5")
+
+
+                    # Activate the emergenci mode
+                    elif db.question("emergencia",  textAudio):
+                        voice.speak("Primeiramente qual é o tipo de emergencia? Vou te dar alguns conselhos dependendo disso! fale apenas a emergencia!")
+                        textAudio = listening.listening()
+                        if "incêndio" in textAudio or "fogo" in textAudio:
+                            voice.speak("Modo incêndio ativado!")
+                            textAudio = "Me fale como lidar com esse tipo de emergencia " + textAudio + " me diga o tempo que eu normalmente teria, alem de como agir, com o que devo me preocupar, entre outras coisas que voce julgar importantes"
+                            textAudio = openaifreatures.chat(textAudio)
+                            voice.speak(textAudio)
+
+                            voice.speak("Você deseja que eu ligue para os bombeiros?")
+                            textAudio = listening.listening()
+
+                        elif "médica" in textAudio or "machucado" in textAudio or "quebrado" in textAudio or "doênte" in textAudio:
+                            voice.speak("Modo Emergência médica ativado!")
+                            voice.speak("Qual é o tipo de emergência médica?")
+                            textAudio = listening.listening()
+
+                            textAudio = "Me fale como lidar com esse tipo de emergencia " + textAudio + " me diga o tempo que eu normalmente teria, alem de como agir, com o que devo me preocupar, entre outras coisas que voce julgar importantes"
+                            textAudio = openaifreatures.chat(textAudio)
+                            voice.speak(textAudio)
+
+                            voice.speak("Você deseja que eu ligue para uma ambulancia?")
+                            textAudio = listening.listening()
+
+                        elif "assalto" in textAudio or "bandidos" in textAudio or "matar" in textAudio or "matou" in textAudio or "polícial" in textAudio:
+                            voice.speak("Modo Emergência policial ativado!")
+                            textAudio = "Me fale como lidar com esse tipo de emergencia " + textAudio + " me diga o tempo que eu normalmente teria, alem de como agir, com o que devo me preocupar, entre outras coisas que voce julgar importantes"
+                            textAudio = openaifreatures.chat(textAudio)
+                            voice.speak(textAudio)
+
+                            voice.speak("Você deseja que eu ligue para a polícia?")
+                            textAudio = listening.listening()
+
+                        else:
+                            textAudio = "Me fale como lidar com esse tipo de emergencia " + textAudio + " me diga o tempo que eu normalmente teria, alem de como agir, com o que devo me preocupar, entre outras coisas que voce julgar importantes"
+                            textAudio = openaifreatures.chat(textAudio)
+                            voice.speak(textAudio)
+
+                            
+
+
+                        voice.speak(textAudio)
+                        #os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+                        
+                        
 
                         
                 db.logs(textAudio, response)

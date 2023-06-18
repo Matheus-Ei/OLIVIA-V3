@@ -22,6 +22,7 @@ import classes.passwords as passwords
 import classes.climate as climate
 import classes.listening as listening
 import classes.openai as openaifreatures
+import classes.openAppSecondScreen as openAppSecondScreen
 
 
 # Pre-definitions
@@ -316,12 +317,75 @@ def code():
                             textAudio = "Me fale como lidar com esse tipo de emergencia " + textAudio + " me diga o tempo que eu normalmente teria, alem de como agir, com o que devo me preocupar, entre outras coisas que voce julgar importantes"
                             textAudio = openaifreatures.chat(textAudio)
                             voice.speak(textAudio)
+                    
 
-                            
+                    # Activates the music mode and only recive music commands
+                    elif db.question("modo musica", textAudio):
+                        loop = True
+                        voice.speak("Modo musica ativado!")
+                        while loop == True:
+                            with sr.Microphone() as sourceMusic:
+                                try:
+                                    basicAudioMusic = r.listen(sourceMusic)
+                                    textAudio=(r.recognize_google(basicAudioMusic, language="pt-br"))
+                                    textAudio = textAudio.lower() 
+                                    print("recognizing...\n")
+                                    print(textAudio + "\n")
 
+                                    # Next song in spotify
+                                    if db.question("pular musica", textAudio):
+                                        retorno = db.answer("pular musica")
+                                        voice.speak(retorno)
+                                        spotify.next()
 
-                        voice.speak(textAudio)
-                        #os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+                                    # Play in music
+                                    elif db.question("play musica", textAudio):
+                                        retorno = db.answer("play musica")
+                                        voice.speak(retorno)
+                                        spotify.play()
+
+                                    # Pause in music
+                                    elif db.question("pausar musica", textAudio):
+                                        retorno = db.answer("pausar musica")
+                                        voice.speak(retorno)
+                                        spotify.pause()
+                                                        
+                                    # Select a music
+                                    elif db.question("selecionar musica", textAudio):
+                                        voice.speak("Diga o nome da musica que você quer que eu toque")
+                                        retorno = "Diga o nome da musica que você quer que eu toque"
+                                        try:
+                                            Music = r.listen(source)
+                                            textAudio=(r.recognize_google(Music, language='pt-br'))
+                                        except:
+                                            print("Deu um Erro!!")
+                                        retorno = "Reproduzindo a música que você pediu!"
+                                        voice.speak(retorno)
+                                        spotify.selectSong(textAudio)
+
+                                    # Selects a playlist
+                                    elif db.question("tocar playlist", textAudio):
+                                        voice.speak("Diga o nome da playlist que você quer que eu toque")
+                                        retorno = "Diga o nome da playlist que você quer que eu toque"
+                                        try:
+                                            Music = r.listen(source)
+                                            textAudio=(r.recognize_google(Music, language='pt-br'))
+                                        except:
+                                            print("Deu um Erro!!") 
+                                        retorno = "Reproduzindo a playlist que você pediu!"
+                                        voice.speak(retorno)
+                                        spotify.selectPlaylist(textAudio)
+
+                                    elif "desativar o modo música" in textAudio or "sair do modo música" in textAudio:
+                                        loop = False
+                                        voice.speak("Desativando o modo música!")
+
+                                    else:
+                                        print("--> Modo musica ativado <--")
+                                        print("--> Para desativar fale 'desativar o modo musica' ou 'sair do modo musica' <--")
+
+                                except sr.UnknownValueError:
+                                    print("--> Modo musica ativado <--")
                         
                         
 

@@ -43,7 +43,7 @@ response = " "
 
 
 
-# Main funcion to back-end
+# Main function to back-end
 def code():
     # Globals
     global textAudio, response, context, enter

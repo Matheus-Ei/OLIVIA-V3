@@ -10,7 +10,7 @@ def chat(enter):
             messages=[
                 {"role": "system", "content":enter}
             ],
-            max_tokens=500
+            max_tokens=200
         )
         response = responseOpenai['choices'][0]['message']['content']
         print(response)

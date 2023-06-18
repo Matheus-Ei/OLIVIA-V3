@@ -1,7 +1,7 @@
 import win32gui
 import win32con
 import subprocess
-import openAppSecondScreen
+import classes.openAppSecondScreen
 
 def inFrontOff(app_title):
     # Find the called app
@@ -41,5 +41,3 @@ def open(atalho):
             print(f"The app '{atalho}' not found")
 
     abrir_aplicativo(atalho)
-
-open("steam")

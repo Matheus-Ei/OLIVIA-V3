@@ -13,6 +13,7 @@ import pyautogui
 from pywinauto import Desktop
 
 
+
 # Libraris
 import classes.appManagement as app
 import classes.voice as voice
@@ -21,8 +22,9 @@ import database.database as db
 import classes.passwords as passwords
 import classes.climate as climate
 import classes.listening as listening
-import classes.openai as openaifreatures
+import classes.openaiii as openaifreatures
 import classes.openAppSecondScreen as openAppSecondScreen
+import classes.searchs as searchs
 
 
 # Pre-definitions
@@ -73,7 +75,7 @@ def code():
                 print(textAudio + "\n")
 
 
-                if "prometeu" in textAudio:
+                if "prometeu" in textAudio or "jarvis" in textAudio:
                     textAudio = textAudio.replace("prometeu", "")
                     try:
                         openai.api_key = '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'
@@ -385,7 +387,18 @@ def code():
                                         print("--> Para desativar fale 'desativar o modo musica' ou 'sair do modo musica' <--")
 
                                 except sr.UnknownValueError:
-                                    print("--> Modo musica ativado <--")\
+                                    print("--> Modo musica ativado <--")
+
+
+                    elif db.question("pesquisa", textAudio):
+
+                        if "google" in textAudio:
+                            searching = searchs.searchGoogle(textAudio)
+                            voice.speak(searching)
+
+                        
+
+
                         
                         
 

@@ -385,7 +385,7 @@ def code():
                                         print("--> Para desativar fale 'desativar o modo musica' ou 'sair do modo musica' <--")
 
                                 except sr.UnknownValueError:
-                                    print("--> Modo musica ativado <--")
+                                    print("--> Modo musica ativado <--")\
                         
                         
 

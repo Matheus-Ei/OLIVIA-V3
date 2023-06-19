@@ -8,6 +8,10 @@ Assistent v2, His name is Prometeu
 - Instalar o Ambiente de Execução por meio do Arquivo "requirements.txt"
   - Abra o CMD na Pasta do Arquivo "requirements.txt"
   - Execute o Comando: `pip install -r requirements.txt`
+ 
+
+## Proximas Alterações
+- Adicionar um arquivo config para armazenar informações de configurações da assistente e de bancos de dados
 
 
 ## Futuras Funcionalidades para Adicionar no Assistente

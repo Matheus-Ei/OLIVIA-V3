@@ -22,6 +22,16 @@ Assistent v2, His name is Prometeu
 - Modos Especificos para Diferentes Situações
 
 
+**IA:**
+- Integração com a OpenAI
+  - GPT 3.5
+  - Geração de Imagem
+- Modelo Gerador de Respostas e Chat
+ - Com o RASA
+ - Aprendizado continuo enquanto conversa
+- Modelo Classificador de Sentenças
+
+
 **JANELAS DO WINDOWS E WEB:**
 - Gerenciamento de Janelas 
 - Pesquisas no Google, Wikipedia, Youtube, etc...
@@ -50,12 +60,6 @@ Assistent v2, His name is Prometeu
   - Lenta mas com Qualidade
 
 
-**IA:**
-- Integração com a OpenAI
-  - GPT 3.5
-  - Geração de Imagem
-
-
 **BANCO DE DADOS:**
 - Sistema de Calendarios e Agendamentos
   - Pode Inserir Compromissos
@@ -67,6 +71,10 @@ Assistent v2, His name is Prometeu
   - Pode Verificar as Listas
   - Pode Deletar Listas Criadas se o Usuario Pedir
 - Sistema de Gestão Financeira
+- Sistema que armazena informações
+ - Armazena informações
+ - Caso solicitado, Retorna as informações armazenadas
+ - Caso solicitado, Deleta as informações armazenadas
 
 
 **GUI E INTERFACE:**

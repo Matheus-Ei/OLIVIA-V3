@@ -81,18 +81,16 @@ def logs(textAudio, response):
         print(e)
 
 
-def checkQuestionAi(checkvalue, textAudio):
-    openai.api_key = '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'
-    check = "me diga se essa frase: '"+textAudio+"' poderia ser usada para pedir para uma assistente pessoal o(a) '"+checkvalue+"', responda APENAS com 'true' ou 'false' não responda com nada mais, apenas uma dessas palavras"
-    responseOpenai = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0301",
-        messages=[
-            {"role": "system", "content":check}
-        ],
-        max_tokens=200
-    )
-    responsecheck = responseOpenai['choices'][0]['message']['content']
-    responsecheck = responsecheck.lower() 
-    if "true" in responsecheck:
-        print("entrou em "+checkvalue)
-        return True
+# Funcion to consult the questions to PROMETEU and check if they are in database
+def simpleQuestion(question, textAudio):
+    try:
+        # Execute a consult
+        cursor.execute('SELECT perg FROM simpleQuestion WHERE func = '+"'"+question+"';")
+        # Recover the consult data
+        rows = cursor.fetchall()
+        for row in rows:
+            roww = str(row[0])
+            if roww in textAudio:
+                return True
+    except pyodbc.Error as e:
+        print(e)

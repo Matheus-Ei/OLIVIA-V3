@@ -1,7 +1,7 @@
 import win32gui
 import win32con
 import subprocess
-import classes.openAppSecondScreen
+import classes.openAppSecondScreen as openAppSecondScreen
 
 def inFrontOff(app_title):
     # Find the called app
@@ -25,7 +25,7 @@ def open(atalho):
         'calculator': 'C:\\Windows\\System32\\calc.exe',
         'notepad': 'C:\\Windows\\System32\\notepad.exe',
         'explorer': 'C:\\Windows\\explorer.exe',
-        'ópera': 'C:\\Users\\t4iga\\AppData\\Local\\Programs\\Opera\\launcher.exe',
+        'opera': 'C:\\Users\\t4iga\\AppData\\Local\\Programs\\Opera\\launcher.exe',
         'navegator': 'C:\\Users\\t4iga\\AppData\\Local\\Programs\\Opera\\launcher.exe',
         'canva': 'C:\\Users\\t4iga\\AppData\\Local\\Programs\\Canva\\Canva.exe',
         'visual studio code': 'C:\\Users\\t4iga\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe',

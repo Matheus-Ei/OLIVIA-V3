@@ -103,46 +103,65 @@ def code():
 
                 else:
                     # Open a app
-                    if  db.question("abrir aplicativo", textAudio):
-                        # Ask what app the user wants open
-                        voice.speak("Qual aplicativo voce deseja abrir?")
-                        try:
-                            basicAudio = r.listen(source)
-                            textAudio=(r.recognize_google(basicAudio, language='pt-br'))
-                            app.open(textAudio) # Opening the app
-                        except:
-                            print("#####@ ERROR @#####")
+                    if  db.simpleQuestion("abrirAPP", textAudio):
+                        loopv = 0
+                        aplicativos = [
+                            'calculator',
+                            'notepad',
+                            'explorer',
+                            'opera',
+                            'navegator',
+                            'canva',
+                            'visual studio code',
+                            'blender',
+                        ]
+                        while loopv < len(aplicativos):
+                            if aplicativos[loopv] in textAudio:
+                                app.open(aplicativos[loopv]) # Opening the app
+                            loopv = loopv+1
 
                     
                     # Speak the time
-                    elif db.question("horas", textAudio):
+                    elif db.simpleQuestion("horas", textAudio):
                         global hour, minutes, seconds, day, week, mounth, year
                         timeGet()
                         response=("São %d e %d minutos" %(hour ,minutes))
                         voice.speak(response)
 
 
-                    # Ends the code
-                    elif db.question("desligamento", textAudio):
-                        voice.speak(db.answer("desligamento")) 
-                        sys.exit()
+                    # Code to turn off
+                    elif db.simpleQuestion("desligamento", textAudio):
+                        # Ends the code
+                        if db.simpleQuestion("codigo", textAudio):
+                            voice.speak("Desativando o código!") 
+                            sys.exit()
+                        #Code to turn off windows
+                        elif db.simpleQuestion("windows", textAudio):
+                            voice.speak("Desligando o windows em 5 segundos!")
+                            time.sleep(5)
+                            os.system("shutdown /s /t 1")
 
-
-                    # Code to execute comands in windows, like turn of or loggof
-                    elif db.question("desligar sistema", textAudio):
-                        voice.speak(db.answer("desligar sistema"))
-                        time.sleep(5)
-                        os.system("shutdown /s /t 1")
-
+                    #Code to logof windows
                     elif db.question("sair sistema", textAudio):
                         voice.speak(db.answer("sair sistema"))
                         time.sleep(5)
                         os.system("shutdown -l")
 
-                    elif db.question("reiniciar sistema", textAudio):
-                        voice.speak(db.answer("reiniciar sistema"))
-                        time.sleep(5)
-                        os.system("shutdown /r /t 1")
+
+                    elif db.simpleQuestion("reiniciar", textAudio):
+                        # restarts the code
+                        if db.simpleQuestion("codigo", textAudio):
+                            voice.speak("Reiniciando a execução do código")
+                            nome_procurado = "Visual Studio Code" # Search the name of the app
+                            desktop = Desktop(backend="uia")
+                            janela = desktop.window(title_re=".*{}.*".format(nome_procurado))
+                            janela.set_focus() # Activate the window
+                            pyautogui.hotkey("ctrl", "shift", "f5")
+                        # Code to restart windows
+                        elif db.simpleQuestion("windows", textAudio):
+                            voice.speak("Reiniciando o Windows em 5 segundos!")
+                            time.sleep(5)
+                            os.system("shutdown /r /t 1")
 
 
                     # Reset the var of context in the GPT-Chat
@@ -156,25 +175,22 @@ def code():
                         voice.speak(db.answer("abrir gerenciador de tarefas"))
                         pyautogui.hotkey("ctrl", "shift", "esc")
 
-                    elif db.question("visao geral das tarefas", textAudio):
-                        voice.speak(db.answer("visao geral das tarefas"))
-                        pyautogui.hotkey("winleft", "tab")
+                    elif db.simpleQuestion("area de trabalho", textAudio):
+                        if db.simpleQuestion("criar", textAudio):
+                            voice.speak("Criando uma nova area de trabalho")
+                            pyautogui.hotkey("ctrl", "winleft", "d")
 
-                    elif db.question("nova area de trabalho", textAudio):
-                        voice.speak(db.answer("nova area de trabalho"))
-                        pyautogui.hotkey("ctrl", "winleft", "d")
+                        elif db.simpleQuestion("deletar", textAudio):
+                            voice.speak("Deletando a area de trabalho!")
+                            pyautogui.hotkey("ctrl", "winleft", "f4")
 
-                    elif db.question("deletar area de trabalho", textAudio):
-                        voice.speak(db.answer("deletar area de trabalho"))
-                        pyautogui.hotkey("ctrl", "winleft", "f4")
+                        elif db.simpleQuestion("anterior", textAudio):
+                            voice.speak("Movendo para a area de trabalho anterior!")
+                            pyautogui.hotkey("ctrl", "winleft", "left")
 
-                    elif db.question("mover para a area de trabalho a esquerda", textAudio):
-                        voice.speak(db.answer("mover para a are de trabalho a esquerda"))
-                        pyautogui.hotkey("ctrl", "winleft", "left")
-
-                    elif db.question("mover para a are de trabalho a direita", textAudio):
-                        voice.speak(db.answer("mover para a are de trabalho a direita"))
-                        pyautogui.hotkey("ctrl", "winleft", "right")
+                        elif db.simpleQuestion("proxima", textAudio):
+                            voice.speak("Movendo para a proxima area de trabalho!")
+                            pyautogui.hotkey("ctrl", "winleft", "right")
 
 
                     # Next song in spotify
@@ -265,20 +281,6 @@ def code():
                     elif db.question("checar clima", textAudio):
                         prevClimate = str(climate.getPrevision("Chapecó"))
                         voice.speak(prevClimate)
-
-
-                    # Reset the execution of the code
-                    elif db.question("reiniciar o codigo", textAudio):
-                        voice.speak("Reiniciando a execução do código")
-                        nome_procurado = "Visual Studio Code" # Search the name of the app
-
-                        desktop = Desktop(backend="uia")
-                        janela = desktop.window(title_re=".*{}.*".format(nome_procurado))
-                        janela.set_focus() # Activate the window
-
-                        print(janela)
-
-                        pyautogui.hotkey("ctrl", "shift", "f5")
 
 
                     # Activate the emergenci mode

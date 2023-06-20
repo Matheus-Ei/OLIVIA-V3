@@ -8,6 +8,10 @@ Assistent v2, His name is Prometeu
 - Instalar o Ambiente de Execução por meio do Arquivo "requirements.txt"
   - Abra o CMD na Pasta do Arquivo "requirements.txt"
   - Execute o Comando: `pip install -r requirements.txt`
+ 
+
+## Proximas Alterações
+- Adicionar um arquivo config para armazenar informações de configurações da assistente e de bancos de dados
 
 
 ## Futuras Funcionalidades para Adicionar no Assistente
@@ -16,6 +20,16 @@ Assistent v2, His name is Prometeu
 - Modo Música
   - Quando ativado o assistente só responde a comandos relacionados a música
 - Modos Especificos para Diferentes Situações
+
+
+**IA:**
+- Integração com a OpenAI
+  - GPT 3.5
+  - Geração de Imagem
+- Modelo Gerador de Respostas e Chat
+ - Com o RASA
+ - Aprendizado continuo enquanto conversa
+- Modelo Classificador de Sentenças
 
 
 **JANELAS DO WINDOWS E WEB:**
@@ -46,12 +60,6 @@ Assistent v2, His name is Prometeu
   - Lenta mas com Qualidade
 
 
-**IA:**
-- Integração com a OpenAI
-  - GPT 3.5
-  - Geração de Imagem
-
-
 **BANCO DE DADOS:**
 - Sistema de Calendarios e Agendamentos
   - Pode Inserir Compromissos
@@ -63,6 +71,10 @@ Assistent v2, His name is Prometeu
   - Pode Verificar as Listas
   - Pode Deletar Listas Criadas se o Usuario Pedir
 - Sistema de Gestão Financeira
+- Sistema que armazena informações
+ - Armazena informações
+ - Caso solicitado, Retorna as informações armazenadas
+ - Caso solicitado, Deleta as informações armazenadas
 
 
 **GUI E INTERFACE:**

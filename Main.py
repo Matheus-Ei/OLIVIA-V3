@@ -175,67 +175,64 @@ def code():
                         voice.speak(db.answer("abrir gerenciador de tarefas"))
                         pyautogui.hotkey("ctrl", "shift", "esc")
 
+
+                    # Desktop Commands
                     elif db.simpleQuestion("area de trabalho", textAudio):
+                        # New Desktop
                         if db.simpleQuestion("criar", textAudio):
                             voice.speak("Criando uma nova area de trabalho")
                             pyautogui.hotkey("ctrl", "winleft", "d")
-
+                        # Delete Desktop
                         elif db.simpleQuestion("deletar", textAudio):
                             voice.speak("Deletando a area de trabalho!")
                             pyautogui.hotkey("ctrl", "winleft", "f4")
-
+                        # Desktop before
                         elif db.simpleQuestion("anterior", textAudio):
                             voice.speak("Movendo para a area de trabalho anterior!")
                             pyautogui.hotkey("ctrl", "winleft", "left")
-
+                        # Next Desktop
                         elif db.simpleQuestion("proxima", textAudio):
                             voice.speak("Movendo para a proxima area de trabalho!")
                             pyautogui.hotkey("ctrl", "winleft", "right")
 
 
-                    # Next song in spotify
-                    elif db.question("pular musica", textAudio):
-                        retorno = db.answer("pular musica")
-                        voice.speak(retorno)
-                        spotify.next()
+                    # Music Commands
+                    elif db.simpleQuestion("musicas", textAudio):
+                        # Next song in spotify
+                        if db.simpleQuestion("pular", textAudio):
+                            retorno = "Pulando musica"
+                            voice.speak(retorno)
+                            spotify.next()
+                        # Play in music
+                        elif db.simpleQuestion("play", textAudio):
+                            retorno = "Tocando musica"
+                            voice.speak(retorno)
+                            spotify.play()
+                        # Pause in music
+                        elif db.simpleQuestion("pausar", textAudio):
+                            retorno = "Pausando musica"
+                            voice.speak(retorno)
+                            spotify.pause()
+                        # Select a music
+                        elif db.simpleQuestion("selecionar", textAudio):
+                            retorno = "Tocando a musica selecionada"
+                            voice.speak(retorno)
+                            selectedMusic = db.simpleQuestionPerg("musicas", textAudio)
+                            selectedMusic = db.simpleQuestionPerg("selecionar", selectedMusic)
+                            print(selectedMusic)
+                            spotify.selectSong(selectedMusic)
 
-                    # Play in music
-                    elif db.question("play musica", textAudio):
-                        retorno = db.answer("play musica")
-                        voice.speak(retorno)
-                        spotify.play()
 
-                    # Pause in music
-                    elif db.question("pausar musica", textAudio):
-                        retorno = db.answer("pausar musica")
-                        voice.speak(retorno)
-                        spotify.pause()
-                                        
-                    # Select a music
-                    elif db.question("selecionar musica", textAudio):
-                        voice.speak("Diga o nome da musica que você quer que eu toque")
-                        retorno = "Diga o nome da musica que você quer que eu toque"
-                        try:
-                            Music = r.listen(source)
-                            textAudio=(r.recognize_google(Music, language='pt-br'))
-                        except:
-                            print("Deu um Erro!!")
-                        retorno = "Reproduzindo a música que você pediu!"
-                        voice.speak(retorno)
-                        spotify.selectSong(textAudio)
-
-                    # Selects a playlist
-                    elif db.question("tocar playlist", textAudio):
-                        voice.speak("Diga o nome da playlist que você quer que eu toque")
-                        retorno = "Diga o nome da playlist que você quer que eu toque"
-                        try:
-                            Music = r.listen(source)
-                            textAudio=(r.recognize_google(Music, language='pt-br'))
-                        except:
-                            print("Deu um Erro!!") 
-                        retorno = "Reproduzindo a playlist que você pediu!"
-                        voice.speak(retorno)
-                        spotify.selectPlaylist(textAudio)
+                    # Playlists Commands
+                    elif db.simpleQuestion("playlist", textAudio):
+                        # Selects a playlist
+                        if db.simpleQuestion("selecionar", textAudio):
+                            retorno = "Tocando a playlist selecionada"
+                            voice.speak(retorno)
+                            selectedMusic = db.simpleQuestionPerg("playlist", textAudio)
+                            selectedMusic = db.simpleQuestionPerg("selecionar", selectedMusic)
+                            print(selectedMusic)
+                            spotify.selectPlaylist(selectedMusic)
                     
 
                     # Generate image with openai

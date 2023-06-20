@@ -94,3 +94,19 @@ def simpleQuestion(question, textAudio):
                 return True
     except pyodbc.Error as e:
         print(e)
+
+
+# Funcion to consult the questions to PROMETEU and check if they are in database
+def simpleQuestionPerg(question, textAudio):
+    try:
+        # Execute a consult
+        cursor.execute('SELECT perg FROM simpleQuestion WHERE func = '+"'"+question+"';")
+        # Recover the consult data
+        rows = cursor.fetchall()
+        for row in rows:
+            roww = str(row[0])
+            if roww in textAudio:
+                textAudio = textAudio.replace(roww, "")
+                return textAudio
+    except pyodbc.Error as e:
+        print(e)

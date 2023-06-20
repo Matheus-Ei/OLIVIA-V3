@@ -26,17 +26,37 @@ Assistent v2, His name is Prometeu
 - Integração com a OpenAI
   - GPT 3.5
   - Geração de Imagem
-- Modelo Gerador de Respostas e Chat
- - Com o RASA
- - Aprendizado continuo enquanto conversa
-- Modelo Classificador de Sentenças
+- Assistente de chamadas telefonicas
+  - Faz ligações
+  - Atende Ligações
+  - Com o Modelo de Geração de texto da Openai(TEXT-DAVICI-3)
+- Geração te Modelos 3D com IA
+
+
+**CALCULOS AVANÇADOS COM BASE EM FORMULAS:**
+- Uma Classe/Arquivo que faz calculos de fisica, quimica e Matematica
+  - Velocidade Média
+  - Área
+  - Volume
+  - Etc...
 
 
 **JANELAS DO WINDOWS E WEB:**
 - Gerenciamento de Janelas 
 - Pesquisas no Google, Wikipedia, Youtube, etc...
+
+
+**INFORMAÇÕES E ATUALIDADES:**
 - Previsão do Tempo
 - Noticias e Atualidades
+
+
+**INFORMAÇÕES SOBRE PESSOAS:**
+- Pesquisas em Todas as Redes Socias
+- Pesquisas em Sites Informantes
+- Buscas em Mecanismos de Busca Convencionais
+- Pesquisas em Sites do Governo
+- Conjuga Todas as Informações e Expoe elas Resumidas e Separadas por Partes Importantes
 
 
 **COMUNICAÇÃO**
@@ -99,12 +119,12 @@ Assistent v2, His name is Prometeu
 - Planejamento de Viagens Personalizado
 - Planejamento e Gerenciamento de Eventos
 - Suporte a Gestão de Projetos
-- Assistência em Compras Online
+- Assistência em Compras Online e Licitações de Preço
 
 
 **LOCALIZAÇÃO:**
 - Navegação Assistida
-- Recomendação de Lugares na Região
+- Recomendação de Lugares na Região com Base em Criterios Especificos
 - Pede Opiniões quando nota que você passou em algum Lugar
 
 

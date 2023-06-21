@@ -255,7 +255,7 @@ def code():
 
 
                     # Get the climate prevision
-                    elif db.question("checar clima", textAudio):
+                    elif db.simpleQuestion("clima", textAudio):
                         prevClimate = str(climate.getPrevision("Chapecó"))
                         voice.speak(prevClimate)
 
@@ -296,11 +296,17 @@ def code():
                             voice.speak(textAudio)
 
 
-                    elif db.question("pesquisa", textAudio):
+                    elif db.simpleQuestion("pesquisa", textAudio):
                         if "google" in textAudio:
-                            searching = searchs.searchGoogle(textAudio)
+                            generateCommand = db.simpleQuestionPerg("pesquisa", textAudio)
+                            generateCommand = db.simpleQuestionPerg("google", generateCommand)
+                            searching = searchs.searchGoogle(generateCommand)
                             voice.speak(searching)
-                        
+                        elif "wikipédia" in textAudio:
+                            generateCommand = db.simpleQuestionPerg("pesquisa", textAudio)
+                            generateCommand = db.simpleQuestionPerg("wikipedia", generateCommand)
+                            searching = searchs.searchWiki(generateCommand)
+                            voice.speak(searching)
                         
 
                         

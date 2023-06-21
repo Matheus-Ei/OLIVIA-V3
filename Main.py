@@ -22,7 +22,7 @@ import database.database as db
 import classes.passwords as passwords
 import classes.climate as climate
 import classes.listening as listening
-import classes.openaiii as openaifreatures
+import classes.openaiCodes as openaifreatures
 import classes.openAppSecondScreen as openAppSecondScreen
 import classes.searchs as searchs
 
@@ -104,21 +104,27 @@ def code():
                 else:
                     # Open a app
                     if  db.simpleQuestion("abrirAPP", textAudio):
-                        loopv = 0
-                        aplicativos = [
-                            'calculator',
-                            'notepad',
-                            'explorer',
-                            'opera',
-                            'navegator',
-                            'canva',
-                            'visual studio code',
-                            'blender',
-                        ]
-                        while loopv < len(aplicativos):
-                            if aplicativos[loopv] in textAudio:
-                                app.open(aplicativos[loopv]) # Opening the app
-                            loopv = loopv+1
+                        # Code to open task mananger
+                        if db.simpleQuestion("gerenciador de tarefas", textAudio):
+                            voice.speak(db.answer("abrir gerenciador de tarefas"))
+                            pyautogui.hotkey("ctrl", "shift", "esc")
+                        # Code to Open a Commun app
+                        else:
+                            loopv = 0
+                            aplicativos = [
+                                'calculator',
+                                'notepad',
+                                'explorer',
+                                'opera',
+                                'navegator',
+                                'canva',
+                                'visual studio code',
+                                'blender',
+                            ]
+                            while loopv < len(aplicativos):
+                                if aplicativos[loopv] in textAudio:
+                                    app.open(aplicativos[loopv]) # Opening the app
+                                loopv = loopv+1
 
                     
                     # Speak the time
@@ -141,13 +147,17 @@ def code():
                             time.sleep(5)
                             os.system("shutdown /s /t 1")
 
-                    #Code to logof windows
-                    elif db.question("sair sistema", textAudio):
-                        voice.speak(db.answer("sair sistema"))
-                        time.sleep(5)
-                        os.system("shutdown -l")
+
+                    # Code to Logof
+                    elif db.simpleQuestion("sair", textAudio):
+                        #Code to logof windows
+                        if db.simpleQuestion("windows", textAudio):
+                            voice.speak("Saindo do windows em 5 segundos")
+                            time.sleep(5)
+                            os.system("shutdown -l")
 
 
+                    # Code to restart
                     elif db.simpleQuestion("reiniciar", textAudio):
                         # restarts the code
                         if db.simpleQuestion("codigo", textAudio):
@@ -162,18 +172,10 @@ def code():
                             voice.speak("Reiniciando o Windows em 5 segundos!")
                             time.sleep(5)
                             os.system("shutdown /r /t 1")
-
-
-                    # Reset the var of context in the GPT-Chat
-                    elif db.question("mudar de assunto", textAudio):
-                        context = "-"
-                        voice.speak(db.answer("mudar de assunto")) 
-
-
-                    # PyAutoGUI freatures
-                    elif db.question("abrir gerenciador de tarefas", textAudio):
-                        voice.speak(db.answer("abrir gerenciador de tarefas"))
-                        pyautogui.hotkey("ctrl", "shift", "esc")
+                        # Reset the var of context in the GPT-Chat
+                        elif db.simpleQuestion("contexto", textAudio):
+                            context = "-"
+                            voice.speak("Mudando de Assunto") 
 
 
                     # Desktop Commands
@@ -234,44 +236,22 @@ def code():
                             print(selectedMusic)
                             spotify.selectPlaylist(selectedMusic)
                     
-
-                    # Generate image with openai
-                    elif db.question("modo geracao de imagem", textAudio):
-                        gerarOutraImagem = True
-                        while gerarOutraImagem == True:
-                            openai.api_key = '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'
-                            voice.speak("Descreva a imagem que você deseja Gerar")
-                            try:
-                                textAudio = listening.listening()
-                                voice.speak("Gerando Imagem " + textAudio)
-
-                                response = openai.Image.create(
-                                prompt = textAudio,
-                                n=1,
-                                size="1024x1024"
-                                )
-                                image_url = response['data'][0]['url']
-                                print(image_url)
-                                # Open the image in navegator
-                                retorno = "Abrindo a Imagem Gerada"
-                                voice.speak(retorno)
-                                webbrowser.open(image_url)
-                            except:
-                                print("#####@ ERROR @#####")
-
-                            voice.speak("Você deseja gerar outra imagem?")
-                            textAudio = listening.listening()
-                            if "não" in textAudio:
-                                voice.speak("Beleza, eu não irei gerar outra imagem")
-                                gerarOutraImagem = False
-
-
-                    # Generate a password
-                    elif db.question("gerar senha", textAudio):
-                        voice.speak("Gerando senha")
-                        response = passwords.genPassword(20)
-                        print(response)
-                        voice.speak("Senha gerada " + response)
+                    
+                    # Generate thinks
+                    elif db.simpleQuestion("gerar", textAudio):
+                        # Generate image
+                        if db.simpleQuestion("imagem", textAudio):
+                            gerarOutraImagem = True
+                            while gerarOutraImagem == True:
+                                generateCommand = db.simpleQuestionPerg("gerar", textAudio)
+                                generateCommand = db.simpleQuestionPerg("imagem", generateCommand)
+                                openaifreatures.generateImage(generateCommand)
+                        # Generate a password
+                        elif db.simpleQuestion("senha", textAudio):
+                            voice.speak("Gerando senha")
+                            response = passwords.genPassword(20)
+                            print(response)
+                            voice.speak("Senha gerada: " + response)
 
 
                     # Get the climate prevision

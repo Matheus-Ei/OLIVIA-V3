@@ -1,7 +1,7 @@
 from googlesearch import search
 import requests
 from bs4 import BeautifulSoup
-import classes.openaiii as opp
+import classes.openaiCodes as opp
 
 def searchGoogle(query):
     a = " "

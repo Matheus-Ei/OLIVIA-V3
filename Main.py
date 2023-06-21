@@ -23,8 +23,10 @@ import classes.passwords as passwords
 import classes.climate as climate
 import classes.listening as listening
 import classes.openaiCodes as openaifreatures
-import classes.openAppSecondScreen as openAppSecondScreen
 import classes.searchs as searchs
+import classes.message.email as email
+import classes.message.whatsapp as whatsapp
+import classes.network as network
 
 
 # Pre-definitions
@@ -296,17 +298,43 @@ def code():
                             voice.speak(textAudio)
 
 
+                    # Funcion to search somethink
                     elif db.simpleQuestion("pesquisa", textAudio):
+                        # Funcion to search somethink in google
                         if "google" in textAudio:
                             generateCommand = db.simpleQuestionPerg("pesquisa", textAudio)
                             generateCommand = db.simpleQuestionPerg("google", generateCommand)
                             searching = searchs.searchGoogle(generateCommand)
                             voice.speak(searching)
+                        # Funcion to search somethink in wikipedia
                         elif "wikipédia" in textAudio:
                             generateCommand = db.simpleQuestionPerg("pesquisa", textAudio)
                             generateCommand = db.simpleQuestionPerg("wikipedia", generateCommand)
                             searching = searchs.searchWiki(generateCommand)
                             voice.speak(searching)
+
+                    
+                    # Funcion to send a message
+                    elif db.simpleQuestion("enviar", textAudio):
+                        if "whatsapp" in textAudio:
+                            print("Whatsapp")
+                            numbers = {"mãe": "63 9985-0556",
+                                    "pai": "63 9919-0929",
+                                    "giovana": "55 9937-2808"}
+                            
+                            for numberName in numbers.keys():
+                                if numberName in textAudio:
+                                    number = numbers[numberName]
+                                    message = textAudio.split(numberName)[-1]
+                                    whatsapp.sendMessage(number, message)
+
+
+                        elif "e-mail" in textAudio:
+                            print("Email")
+                            #email.sendEmail(destinatario, Assunto, message)
+
+                        else:
+                            retorno = "Para enviar uma mensagem você deve especificar a Via"
                         
 
                         

@@ -24,5 +24,3 @@ def sendEmail(destinatario, Assunto, message):
     # Envie o e-mail
     server.send_message(msg)
     server.quit()
-
-sendEmail("ferramentaseickhoff@gmail.com", "Teste", "Teste")

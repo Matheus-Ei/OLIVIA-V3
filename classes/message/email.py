@@ -3,13 +3,13 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
-# Enviar Email(AINDA NÃO FUNCIONANDO)
-def enviar_email(destinatario, Assunto, message):
+# Send a Email
+def sendEmail(destinatario, Assunto, message):
     # Configurações do servidor SMTP do Gmail
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-    username = 'eickoffmatheus@gmail.com'
-    password = '123@Matheuse'
+    username = 't4igacomercial@gmail.com'
+    password = 'xmqiwucnotxthrvh'
     # Crie uma instância da mensagem
     msg = MIMEMultipart()
     msg['From'] = username
@@ -24,3 +24,5 @@ def enviar_email(destinatario, Assunto, message):
     # Envie o e-mail
     server.send_message(msg)
     server.quit()
+
+sendEmail("ferramentaseickhoff@gmail.com", "Teste", "Teste")

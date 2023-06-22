@@ -5,12 +5,13 @@ Assistent v2, His name is Prometeu
 - 01 Notebook ou PC
 - Sistema Operacional Windows
 - Ter Python Instalado
-- Instalar o Ambiente de Execução por meio do Arquivo "requirements.txt"
-  - Abra o CMD na Pasta do Arquivo "requirements.txt"
-  - Execute o Comando: `pip install -r requirements.txt`
+- Ter o Ambiente de Execução Instalado
+- Ter um Ambiente Gráfico
  
 ## Como Instalar o Assistente:
-+ Instalar Python
+- Instalar Python
+- Clonar o Repositorio Atual
 - Instalar o Ambiente de Execução por meio do Arquivo "requirements.txt"
   - Abra o CMD na Pasta do Arquivo "requirements.txt"
   - Execute o Comando: `pip install -r requirements.txt`
+

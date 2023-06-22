@@ -10,7 +10,7 @@ Assistent v2, His name is Prometeu
   - Execute o Comando: `pip install -r requirements.txt`
  
 ## Como Instalar o Assistente:
-* Instalar Python
++ Instalar Python
 - Instalar o Ambiente de Execução por meio do Arquivo "requirements.txt"
   - Abra o CMD na Pasta do Arquivo "requirements.txt"
   - Execute o Comando: `pip install -r requirements.txt`

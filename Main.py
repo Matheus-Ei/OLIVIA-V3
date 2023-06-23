@@ -396,6 +396,25 @@ def code():
                             voice.speak(uploadSpeed)
 
 
+
+                    elif db.simpleQuestion("tradutor", textAudio):
+                        textAudio = db.simpleQuestionPerg("tradutor", textAudio)
+                        if "inglês" in textAudio:
+                            textAudio = textAudio.split("inglês")[-1]
+                            traduct = personalTranslator.translation(textAudio, "en")
+                            # Copy the password
+                            pyperclip.copy(traduct)
+                            voice.speak("A tradução ficou assim: " + traduct + ", Tradução ja copiada para a área de transferencia")
+                        elif "espanhol" in textAudio:
+                            textAudio = textAudio.split("espanhol")[-1]
+                            traduct = personalTranslator.translation(textAudio, "es")
+                            # Copy the password
+                            pyperclip.copy(traduct)
+                            voice.speak("A tradução ficou assim: " + traduct + ", Tradução ja copiada para a área de transferencia")
+                        else:
+                            voice.speak("Você deve especificar a lingua que deseja traduzir!")
+
+
                         
 
                 db.logs(textAudio, response)

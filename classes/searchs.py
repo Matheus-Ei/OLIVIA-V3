@@ -3,6 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 import classes.openaiCodes as opp
 import wikipediaapi
+import webbrowser
+import re
 
 def searchGoogle(query):
     a = " "
@@ -66,3 +68,20 @@ def searchWiki(query):
         return responseopp
     else:
         print("A página não foi encontrada.")
+
+
+
+def website_opener(name):
+    input_text = name
+    domain = input_text.lower().split(" ")[-1]
+    extension = re.search(r"[.]", domain)
+    if not extension:
+        if not domain.endswith(".com"):
+            domain = domain + ".com"
+    try:
+        url = 'https://www.' + domain
+        webbrowser.open(url)
+        return True
+    except Exception as e:
+        print(e)
+        return False

@@ -8,6 +8,7 @@ import os
 import time
 import pyautogui
 import webbrowser
+import re
 import pygetwindow as gw
 import pyautogui
 from pywinauto import Desktop
@@ -26,7 +27,7 @@ import classes.openaiCodes as openaifreatures
 import classes.searchs as searchs
 import classes.message.email as email
 import classes.message.whatsapp as whatsapp
-import classes.network as network
+#import classes.network as network
 
 
 # Pre-definitions
@@ -194,6 +195,7 @@ def code():
                         elif db.simpleQuestion("anterior", textAudio):
                             voice.speak("Movendo para a area de trabalho anterior!")
                             pyautogui.hotkey("ctrl", "winleft", "left")
+
                         # Next Desktop
                         elif db.simpleQuestion("proxima", textAudio):
                             voice.speak("Movendo para a proxima area de trabalho!")
@@ -250,16 +252,33 @@ def code():
                                 openaifreatures.generateImage(generateCommand)
                         # Generate a password
                         elif db.simpleQuestion("senha", textAudio):
-                            voice.speak("Gerando senha")
-                            response = passwords.genPassword(20)
-                            print(response)
-                            voice.speak("Senha gerada: " + response)
+                            inteiro = re.findall(r'\d+', textAudio)
+                            try:
+                                inteiro = inteiro[0]
+                            except IndexError:
+                                inteiro = "20"
+                                print("IndexError")
+                            except TypeError:
+                                print("TypeError")
+                            if inteiro in textAudio:
+                                inteiro = int(inteiro)
+                                voice.speak("Gerando senha")
+                                response = passwords.genPassword(inteiro)
+                                print(response)
+                                voice.speak("Senha gerada e printada")
+                            # Turns on the pattern value
+                            else:
+                                voice.speak("Gerando senha")
+                                response = passwords.genPassword(20)
+                                print(response)
+                                voice.speak("Senha gerada: " + response)
 
 
                     # Get the climate prevision
                     elif db.simpleQuestion("clima", textAudio):
-                        prevClimate = str(climate.getPrevision("Chapecó"))
-                        voice.speak(prevClimate)
+                        prevClimate = climate.getPrevision("Chapecó")
+                        for climat in prevClimate:    
+                            voice.speak(climat)
 
 
                     # Activate the emergenci mode
@@ -312,6 +331,9 @@ def code():
                             generateCommand = db.simpleQuestionPerg("wikipedia", generateCommand)
                             searching = searchs.searchWiki(generateCommand)
                             voice.speak(searching)
+                        # Funcion to send everithink
+                        else:
+                            voice.speak("Você não definiu em qual mecanismo de busca deseja procurar!")
 
                     
                     # Funcion to send a message
@@ -320,24 +342,42 @@ def code():
                             print("Whatsapp")
                             numbers = {"mãe": "63 9985-0556",
                                     "pai": "63 9919-0929",
-                                    "giovana": "55 9937-2808"}
-                            
+                                    "giovanna": "55 9937-2808"}
                             for numberName in numbers.keys():
                                 if numberName in textAudio:
                                     number = numbers[numberName]
                                     message = textAudio.split(numberName)[-1]
-                                    whatsapp.sendMessage(number, message)
-
-
+                                    voice.speak("Você realmente deseja enviar essa mensagem? " + message)
+                                    send = listening.listening()
+                                    if "sim" in send:
+                                        whatsapp.sendMessage(number, message)
+                                        voice.speak("Enviando mensagem para " + numberName)
                         elif "e-mail" in textAudio:
                             print("Email")
                             #email.sendEmail(destinatario, Assunto, message)
-
                         else:
-                            retorno = "Para enviar uma mensagem você deve especificar a Via"
+                            retorno = "Para enviar algo você deve especificar a Via"
+                            voice.speak(retorno)
+
+                    
+                    elif db.simpleQuestion("fechar", textAudio):
+                        aplication = db.simpleQuestionPerg("fechar", textAudio)
+                        #aplication = aplication.replace(" ", "")
+                        aplication = aplication.split()
+                        for carac in aplication:
+                            caracteres = list(carac)
+                            contador = len(caracteres)
+                            print(contador)
+                            print(caracteres)
+                            if contador>4:
+                                print(carac)
+                                if app.close(carac):
+                                    voice.speak("Aplicativo fechado!")
+
                         
 
                         
+
                 db.logs(textAudio, response)
 
 

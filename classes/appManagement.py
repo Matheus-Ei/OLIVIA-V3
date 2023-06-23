@@ -2,6 +2,8 @@ import win32gui
 import win32con
 import subprocess
 import classes.openAppSecondScreen as openAppSecondScreen
+import pygetwindow as gw
+import time
 
 def inFrontOff(app_title):
     # Find the called app
@@ -41,3 +43,19 @@ def open(atalho):
             print(f"The app '{atalho}' not found")
 
     abrir_aplicativo(atalho)
+
+
+def close(atalho):
+        try:
+            atalhoLetters = list(atalho)
+            atalhoLetters[0] = atalhoLetters[0].upper()
+            atalho = ""
+            for letter in atalhoLetters:
+                atalho = atalho+letter
+            janela = gw.getWindowsWithTitle(atalho)[0]
+            # Unmaximize the window
+            janela.close()
+            print(f"App '{atalho}' has been closed")
+            return True
+        except IndexError:
+            print("IndexError, app not founded")

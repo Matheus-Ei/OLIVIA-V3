@@ -1,7 +1,7 @@
 import win32gui
 import win32con
 import subprocess
-import openAppSecondScreen as openAppSecondScreen
+import class.openAppSecondScreen as openAppSecondScreen
 import speedtest
 
 ""

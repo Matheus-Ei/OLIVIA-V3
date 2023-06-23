@@ -11,6 +11,11 @@ def getPrevision(city):
     data = json.loads(response.text)
     temperatura = data['main']['temp']
     descricao = data['weather'][0]['description']
-    print(f'Previsão do tempo para {city}:')
-    print(f'Temperatura: {temperatura}°C')
-    print(f'Descrição: {descricao}')
+    lista = []
+    cidade = (f'Previsão do tempo para {city}:')
+    temperaturageral = (f'Temperatura: {temperatura}°C')
+    descricaoGeral = (f'Descrição: {descricao}')
+    lista.append(cidade)
+    lista.append(temperaturageral)
+    lista.append(descricaoGeral)
+    return(lista)

@@ -13,5 +13,9 @@ Assistent v2, His name is Prometeu
 - Clonar o Repositorio Atual
 - Instalar o Ambiente de Execução por meio do Arquivo "requirements.txt"
   - Abra o CMD na Pasta do Arquivo "requirements.txt"
+<<<<<<< HEAD
+  - Execute o Comando: `pip install -r requirements.txt`
+=======
   - Execute o Comando: `pip install -r requirements.txt`
 
+>>>>>>> c28f26069d6bc73226e6122b19b06eff1dac5d56

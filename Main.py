@@ -30,6 +30,7 @@ import classes.message.email as email
 import classes.message.whatsapp as whatsapp
 import classes.network as ntw
 import classes.translator as personalTranslator
+import classes.filesManangement as filesMan
 
 
 # Pre-definitions
@@ -267,7 +268,7 @@ def code():
                                 voice.speak("Gerando senha")
                                 response = passwords.genPassword(inteiro)
                                 print(response)
-                                # Cópy the password
+                                # Copy the password
                                 pyperclip.copy(response)
                                 voice.speak("Senha gerada e adicionada a área de transferencia!")
                             # Turns on the pattern value
@@ -335,6 +336,17 @@ def code():
                             generateCommand = db.simpleQuestionPerg("wikipedia", generateCommand)
                             searching = searchs.searchWiki(generateCommand)
                             voice.speak(searching)
+                        # Funcion to search by file
+                        elif "arquivo" in textAudio:
+                            generateCommand = textAudio.split("arquivo ")[-1]
+                            print(generateCommand)
+                            file = filesMan.findFile(generateCommand)
+                            if file:
+                                file = file[0]
+                                pyperclip.copy(file)
+                                voice.speak("Arquivo encontrado na pasta: " + file + ", Caminho copiado para a área de transferencia!")
+                            else:
+                                voice.speak("Arquivo não encontrado!")
                         # Funcion to send everithink
                         else:
                             voice.speak("Você não definiu em qual mecanismo de busca deseja procurar!")
@@ -402,13 +414,13 @@ def code():
                         if "inglês" in textAudio:
                             textAudio = textAudio.split("inglês")[-1]
                             traduct = personalTranslator.translation(textAudio, "en")
-                            # Copy the password
+                            # Copy
                             pyperclip.copy(traduct)
                             voice.speak("A tradução ficou assim: " + traduct + ", Tradução ja copiada para a área de transferencia")
                         elif "espanhol" in textAudio:
                             textAudio = textAudio.split("espanhol")[-1]
                             traduct = personalTranslator.translation(textAudio, "es")
-                            # Copy the password
+                            # Copy
                             pyperclip.copy(traduct)
                             voice.speak("A tradução ficou assim: " + traduct + ", Tradução ja copiada para a área de transferencia")
                         else:

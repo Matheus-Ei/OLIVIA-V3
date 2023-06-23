@@ -1,34 +1,34 @@
-import win32print
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+import time
+import pyautogui
 
 def imprimir_arquivo(arquivo):
-    # Defina a impressora padrão (você pode modificar para o nome da sua impressora)
-    impressora_padrao = win32print.GetDefaultPrinter()
+    # Configurar as opções do Firefox
+    options = Options()
+    options.add_argument('--kiosk')
 
-    # Abra o arquivo para impressão
-    try:
-        file_handle = open(arquivo, 'rb')
-    except IOError:
-        raise Exception(f"Não foi possível abrir o arquivo: {arquivo}")
+    # Inicializar o driver do Firefox
+    driver = webdriver.Firefox(options=options)
 
-    # Inicialize a impressão
-    print_handle = win32print.OpenPrinter(impressora_padrao)
-    job_info = win32print.StartDocPrinter(print_handle, 1, ('Imprimir arquivo', None, "RAW"))
-    win32print.StartPagePrinter(print_handle)
+    # Abrir o arquivo PDF no navegador
+    driver.get(f'file:///{arquivo}')
 
-    # Leia e imprima o conteúdo do arquivo
-    while True:
-        data = file_handle.read(4096)
-        if not data:
-            break
-        win32print.WritePrinter(print_handle, data)
+    time.sleep(0.5)  # Atraso para dar tempo
+    pyautogui.click()
 
-    # Finalize a impressão
-    win32print.EndPagePrinter(print_handle)
-    win32print.EndDocPrinter(print_handle)
-    win32print.ClosePrinter(print_handle)
+    time.sleep(0.5)  # Atraso para dar tempo
+    pyautogui.hotkey("ctrl", "p")
 
-    # Feche o arquivo
-    file_handle.close()
+    time.sleep(0.5)  # Atraso para dar tempo
+    pyautogui.press('enter')
 
-# Chamada da função para imprimir um arquivo
-imprimir_arquivo(r"C:\Users\t4iga\Downloads\pdf-test.pdf")
+    time.sleep(0.5)
+
+    print("<<Impressão Bem Sussedida>>")
+
+    # Fechar o navegador
+    driver.quit()
+
+# Chamada da função para imprimir um arquivo PDF
+#imprimir_arquivo(r"C:\Users\t4iga\Downloads\Aula 1.pdf")

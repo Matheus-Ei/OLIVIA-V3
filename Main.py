@@ -12,7 +12,7 @@ import re
 import pygetwindow as gw
 import pyautogui
 from pywinauto import Desktop
-
+import speedtest
 
 
 # Libraris
@@ -27,7 +27,8 @@ import classes.openaiCodes as openaifreatures
 import classes.searchs as searchs
 import classes.message.email as email
 import classes.message.whatsapp as whatsapp
-#import classes.network as network
+import classes.network as ntw
+import classes.translator as personalTranslator
 
 
 # Pre-definitions
@@ -374,7 +375,23 @@ def code():
                                 if app.close(carac):
                                     voice.speak("Aplicativo fechado!")
 
-                        
+
+
+                    elif db.simpleQuestion("testar", textAudio):
+                        # Creates the speedtest object
+                        testeVelocidade = speedtest.Speedtest()
+                        # Tests the Values
+                        downloadSpeed = ntw.velocidade_downloadd(testeVelocidade)
+                        uploadSpeed = ntw.velocidade_uploadd(testeVelocidade)
+                        ping = ntw.pingg(testeVelocidade)
+                        # Enter in the condicionals values
+                        if db.simpleQuestion("ping", textAudio):
+                            voice.speak(ping)
+                        if db.simpleQuestion("download", textAudio):
+                            voice.speak(downloadSpeed)
+                        if db.simpleQuestion("upload", textAudio):
+                            voice.speak(uploadSpeed)
+
 
                         
 

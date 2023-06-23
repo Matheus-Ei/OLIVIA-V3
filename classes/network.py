@@ -1,25 +1,33 @@
 import win32gui
 import win32con
 import subprocess
-import class.openAppSecondScreen as openAppSecondScreen
+import classes.openAppSecondScreen as openAppSecondScreen
 import speedtest
 
-""
 
 # Funcion to open the app
-def test():
-    # Cria um objeto Speedtest
-    teste_velocidade = speedtest.Speedtest()
+def pingg(teste_velocidade):
+    print("Testando o ping...")
+    ping = teste_velocidade.results.ping
+    ping = ("Ping: %.2f ms" % ping)
 
+    return ping
+
+# Funcion to open the app
+def velocidade_downloadd(teste_velocidade):
     # Executa o teste de velocidade
     print("Testando a velocidade de download...")
     velocidade_download = teste_velocidade.download() / 10**6  # Converter para megabits por segundo
-    print("Velocidade de download: %.2f Mbps" % velocidade_download)
+    velocidade_download = ("Velocidade de download: %.2f Mbps" % velocidade_download)
+
+    return velocidade_download
+
+
+# Funcion to open the app
+def velocidade_uploadd(teste_velocidade):
 
     print("Testando a velocidade de upload...")
     velocidade_upload = teste_velocidade.upload() / 10**6  # Converter para megabits por segundo
-    print("Velocidade de upload: %.2f Mbps" % velocidade_upload)
+    velocidade_upload = ("Velocidade de upload: %.2f Mbps" % velocidade_upload)
 
-    print("Testando o ping...")
-    ping = teste_velocidade.results.ping
-    print("Ping: %.2f ms" % ping)
+    return velocidade_upload

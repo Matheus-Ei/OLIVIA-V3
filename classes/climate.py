@@ -1,6 +1,7 @@
 # Imports
 import requests
 import json
+import classes.translator as personalTranslator
 
 
 # Does the climate prevision
@@ -13,7 +14,10 @@ def getPrevision(city):
     descricao = data['weather'][0]['description']
     lista = []
     cidade = (f'Previsão do tempo para {city}:')
+    temperatura = int(temperatura)
+    temperatura = [temperatura - 273]
     temperaturageral = (f'Temperatura: {temperatura}°C')
+    descricao = personalTranslator.translation(descricao, "pt")
     descricaoGeral = (f'Descrição: {descricao}')
     lista.append(cidade)
     lista.append(temperaturageral)

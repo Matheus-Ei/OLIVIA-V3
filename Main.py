@@ -13,6 +13,7 @@ import pygetwindow as gw
 import pyautogui
 from pywinauto import Desktop
 import speedtest
+import pyperclip
 
 
 # Libraris
@@ -266,7 +267,9 @@ def code():
                                 voice.speak("Gerando senha")
                                 response = passwords.genPassword(inteiro)
                                 print(response)
-                                voice.speak("Senha gerada e printada")
+                                # Cópy the password
+                                pyperclip.copy(response)
+                                voice.speak("Senha gerada e adicionada a área de transferencia!")
                             # Turns on the pattern value
                             else:
                                 voice.speak("Gerando senha")
